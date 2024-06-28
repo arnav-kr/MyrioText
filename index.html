@@ -17,17 +17,31 @@
   <meta name="title" content="Myrio Text">
   <meta name="description"
     content="Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret messages with your friends.">
-  <meta name="keywords" content="myrio text, text to image, image to text, encode text, decode text, secret messages, arnav, arnav-kr, arnav-kr.github.io, myrio.now.sh, myrio.vercel.app, encrypt decrypt, secret">
+  <meta name="keywords"
+    content="myrio text, text to image, image to text, encode text, decode text, secret messages, arnav, arnav-kr, arnav-kr.github.io, myrio.now.sh, myrio.vercel.app, encrypt decrypt, secret">
   <meta name="robots" content="index, follow">
   <!-- <link rel="manifest" href="manifest.webmanifest"> --><!-- Uncomment for PWA Support -->
 </head>
 
-<body>
-
-  <div class="w-screen h-screen flex flex-col justify-center items-center bg-slate-800">
-    <h2 class="text-2xl font-semibold text-slate-50">Hello!</h2>
-    <p class="text-lg text-slate-200 font-medium text-center">Myrio Text user</p>
-  </div>
+<body class="dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
+  <header class="w-full flex justify-between items-center p-8">
+    <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
+    <nav
+      class="relative rounded-md shadow-lg dark:bg-zinc-800 dark:text-zinc-50 bg-zinc-100 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
+      <label class="cursor-pointer rounded-md py-2 pl-3 block has-[:checked]:bg-zinc-300 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
+        <input type="radio" name="mode" value="encode" class="hidden" checked>
+        <span>Encode</span>
+      </label>
+      <label class="cursor-pointer rounded-md py-2 pr-3 block has-[:checked]:bg-zinc-300 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
+        <input type="radio" name="mode" value="decode" class="hidden">
+        <span>Decode</span>
+      </label>
+    </nav>
+    <a href="https://github.com/arnav-kr/MyrioText" title="Myrio Text GitHub" class="p-3 rounded-md shadow-md ring-1 ring-zinc-100 dark:ring-zinc-800"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 fill-zinc-900 dark:fill-zinc-50"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+  </header>
+  <main class="flex w-full py-2 px-6">
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur eveniet dolorum laborum molestias totam suscipit architecto nostrum maxime minima. Officiis officia incidunt tempore pariatur suscipit dolores aliquam hic ad sunt!</p>
+  </main>
 
   <script src="/src/main.js" type="module"></script>
 </body>
