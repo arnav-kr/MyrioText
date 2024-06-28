@@ -1,0 +1,35 @@
+{
+  "name": "myrio-text",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "devhost": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "dotenv": "^16.4.5",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnav-kr/MyrioText.git"
+  },
+  "keywords": [
+    "myrio",
+    "text",
+    "encoder",
+    "decoder",
+    "image"
+  ],
+  "author": "Arnav Kumar (https://github.com/arnav-kr)",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/arnav-kr/MyrioText/issues"
+  },
+  "homepage": "https://github.com/arnav-kr/MyrioText#readme"
+}

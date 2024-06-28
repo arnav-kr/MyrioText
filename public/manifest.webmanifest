@@ -1,0 +1,28 @@
+{
+  "theme_color": "#212121",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "id": "/",
+  "scope": "/",
+  "start_url": "/",
+  "orientation": "portrait",
+  "name": "Myrio Text",
+  "short_name": "Myrio Text",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "text",
+    "image",
+    "encoder",
+    "decoder"
+  ],
+  "description": "Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret messages with your friends.",
+  "icons": [
+    {
+      "src": "/assets/logo.png",
+      "sizes": "1024x404",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
