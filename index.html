@@ -56,25 +56,58 @@
       role="presentation" aria-roledescription="Encoded Image Preview">
       <canvas class="w-36 h-36" id="render">Huh, Your Browser Doesn't Support Canvas</canvas>
     </section>
-    <section class="w-full max-w-md p-4 rounded-lg m-4" role="form"
-      aria-roledescription="Image Encoding/Decoding Controls">
-      <label for="text" class="block font-semibold text-base mb-2">Enter Your Text to Encode:</label>
-      <textarea id="text"
-        class="appearance-none resize block w-full text-base min-w-56 p-2 bg-zinc-50 ring-inset shadow-sm border-0 focus:outline-0 dark:bg-zinc-800 rounded-md ring-1 focus:ring-sky-700 focus:ring-2 dark:focus:ring-sky-500 ring-zinc-300 dark:ring-zinc-700"
-        rows="6"></textarea>
-      <div class="w-full text-sm font-semibold text-center my-2">OR</div>
-      <label for="image-file" class="w-full bg-sky-700 py-3 px-4 flex items-center justify-center gap-2 rounded-md shadow-sm">
-        <span class="w-6 h-6 mr-2">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="fill-zinc-50 w-6 h-6">
-            <path
-              d="M440-367v127q0 17 11.5 28.5T480-200q17 0 28.5-11.5T520-240v-127l36 36q6 6 13.5 9t15 2.5q7.5-.5 14.5-3.5t13-9q11-12 11.5-28T612-388L508-492q-6-6-13-8.5t-15-2.5q-8 0-15 2.5t-13 8.5L348-388q-12 12-11.5 28t12.5 28q12 11 28 11.5t28-11.5l35-35ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h287q16 0 30.5 6t25.5 17l194 194q11 11 17 25.5t6 30.5v447q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-440H560q-17 0-28.5-11.5T520-640ZM240-800v200-200 640-640Z" />
-          </svg>
-        </span>
-        <span class="font-semibold text-base text-zinc-50">Upload Image</span>
-        <input type="file" name="image-file" id="image-file" class="hidden">
-      </label>
+    <section class="w-full max-w-md p-4 rounded-lg m-4" >
+      <!-- encode section -->
+      <section id="encode-section" role="form"
+      aria-roledescription="Image Encoding Controls">
+        <label for="text" class="label">Enter Your Text to Encode:</label>
+        <!-- input text -->
+        <textarea id="text" class="resize input" rows="6"></textarea>
+
+        <!-- unit size -->
+        <label for="unit-size" class="label">Unit Size:</label>
+        <input type="number" id="unit-size" class="input" value="5" min="1" max="100">
+
+        <!-- use encryption -->
+        <input type="checkbox" id="use-encryption"
+          class="peer align-middle accent-sky-700 dark:accent-sky-600 w-4 h-4 rounded-sm text-zinc-600 dark:ring-zinc-700">
+        <label for="use-encryption" class="label inline-block align-middle mb-0.5">Use Encryption</label>
+
+        <!-- encryption key input -->
+        <div class="hidden peer-checked:block mt-2">
+          <label for="key" class="label">Encryption Key:</label>
+          <input type="text" id="key" class="input">
+        </div>
+
+        <!-- encode button -->
+        <button id="encode-button" type="button"
+          class="mt-3 button">
+          <span class="font-semibold text-base text-zinc-50">Encode</span>
+        </button>
+
+        <!-- <div class="w-full text-sm font-semibold text-center my-2">OR</div>
+        <label for="image-file"
+          class="w-full bg-sky-700 py-3 px-4 flex items-center justify-center gap-2 rounded-md shadow-sm">
+          <span class="w-6 h-6 mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="fill-zinc-50 w-6 h-6">
+              <path
+                d="M440-367v127q0 17 11.5 28.5T480-200q17 0 28.5-11.5T520-240v-127l36 36q6 6 13.5 9t15 2.5q7.5-.5 14.5-3.5t13-9q11-12 11.5-28T612-388L508-492q-6-6-13-8.5t-15-2.5q-8 0-15 2.5t-13 8.5L348-388q-12 12-11.5 28t12.5 28q12 11 28 11.5t28-11.5l35-35ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h287q16 0 30.5 6t25.5 17l194 194q11 11 17 25.5t6 30.5v447q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-440H560q-17 0-28.5-11.5T520-640ZM240-800v200-200 640-640Z" />
+            </svg>
+          </span>
+          <span class="font-semibold text-base text-zinc-50">Upload Image</span>
+          <input type="file" name="image-file" id="image-file" class="hidden">
+        </label> -->
+      </section>
+      <!-- decode section -->
+      <section id="decode-section" class="hidden" role="form"
+      aria-roledescription="Image Decoding Controls">
+        <!-- decode button -->
+        <button id="decode-button" type="button"
+          class="mt-3 button">
+          <span class="font-semibold text-base text-zinc-50">Decode</span>
+        </button>
+      </section>
     </section>
-    <!-- <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur eveniet dolorum laborum molestias totam suscipit architecto nostrum maxime minima. Officiis officia incidunt tempore pariatur suscipit dolores aliquam hic ad sunt!</p> -->
   </main>
   <footer>
     <hr class="my-3 mx-8 bg-transparent border-zinc-200 dark:border-zinc-700">
