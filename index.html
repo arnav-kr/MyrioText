@@ -28,30 +28,59 @@
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
     <nav
       class="relative rounded-md shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
-      <label class="cursor-pointer rounded-md py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
+      <label
+        class="cursor-pointer rounded-md py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
         <input type="radio" name="mode" value="encode" class="hidden" checked>
         <span>Encode</span>
       </label>
-      <label class="cursor-pointer rounded-md py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
+      <label
+        class="cursor-pointer rounded-md py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
         <input type="radio" name="mode" value="decode" class="hidden">
         <span>Decode</span>
       </label>
     </nav>
-    <a href="https://github.com/arnav-kr/MyrioText" target="_blank" rel="noopener noreferrer" title="Myrio Text GitHub Repo" class="p-3 rounded-md shadow-sm ring-1 bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-100 transition duration-150 ring-zinc-200 dark:ring-zinc-800"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 fill-zinc-900 dark:fill-zinc-50"><title>Myrio Text GitHub Repo</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+    <a href="https://github.com/arnav-kr/MyrioText" target="_blank" rel="noopener noreferrer"
+      title="Myrio Text GitHub Repo"
+      class="p-3 rounded-md shadow-sm ring-1 bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-100 transition duration-150 ring-zinc-200 dark:ring-zinc-800"><svg
+        role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+        class="w-7 h-7 fill-zinc-900 dark:fill-zinc-50">
+        <title>Myrio Text GitHub Repo</title>
+        <path
+          d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+      </svg></a>
   </header>
-  <main class="flex flex-grow flex-col items-center lg:flex-row lg:justify-evenly w-full py-2 px-6 min-h-[calc(100% - 128px)]">
-    <section class="min-w-36 min-h-36 bg-zinc-50 dark:bg-zinc-800 rounded-lg m-4 shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700" role="presentation" aria-roledescription="Encoded Image Preview">
+  <main
+    class="flex flex-grow flex-col items-center lg:flex-row lg:justify-evenly w-full py-2 px-6 min-h-[calc(100% - 128px)]">
+    <section
+      class="min-w-36 min-h-36 bg-zinc-50 dark:bg-zinc-800 rounded-lg m-4 shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700"
+      role="presentation" aria-roledescription="Encoded Image Preview">
       <canvas class="w-36 h-36" id="render">Huh, Your Browser Doesn't Support Canvas</canvas>
     </section>
-    <section class="w-full max-w-md p-4 rounded-lg m-4" role="form" aria-roledescription="Image Encoding/Decoding Controls">
+    <section class="w-full max-w-md p-4 rounded-lg m-4" role="form"
+      aria-roledescription="Image Encoding/Decoding Controls">
       <label for="text" class="block font-semibold text-base mb-2">Enter Your Text to Encode:</label>
-      <textarea id="text" class="appearance-none resize block w-full text-base min-w-56 p-2 bg-zinc-50 ring-inset shadow-sm border-0 focus:outline-0 dark:bg-zinc-800 rounded-md ring-1 focus:ring-sky-700 focus:ring-2 dark:focus:ring-sky-500 ring-zinc-300 dark:ring-zinc-700" rows="6"></textarea>
+      <textarea id="text"
+        class="appearance-none resize block w-full text-base min-w-56 p-2 bg-zinc-50 ring-inset shadow-sm border-0 focus:outline-0 dark:bg-zinc-800 rounded-md ring-1 focus:ring-sky-700 focus:ring-2 dark:focus:ring-sky-500 ring-zinc-300 dark:ring-zinc-700"
+        rows="6"></textarea>
+      <div class="w-full text-sm font-semibold text-center my-2">OR</div>
+      <label for="image-file" class="w-full bg-sky-700 py-3 px-4 flex items-center justify-center gap-2 rounded-md shadow-sm">
+        <span class="w-6 h-6 mr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="fill-zinc-50 w-6 h-6">
+            <path
+              d="M440-367v127q0 17 11.5 28.5T480-200q17 0 28.5-11.5T520-240v-127l36 36q6 6 13.5 9t15 2.5q7.5-.5 14.5-3.5t13-9q11-12 11.5-28T612-388L508-492q-6-6-13-8.5t-15-2.5q-8 0-15 2.5t-13 8.5L348-388q-12 12-11.5 28t12.5 28q12 11 28 11.5t28-11.5l35-35ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h287q16 0 30.5 6t25.5 17l194 194q11 11 17 25.5t6 30.5v447q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-440H560q-17 0-28.5-11.5T520-640ZM240-800v200-200 640-640Z" />
+          </svg>
+        </span>
+        <span class="font-semibold text-base text-zinc-50">Upload Image</span>
+        <input type="file" name="image-file" id="image-file" class="hidden">
+      </label>
     </section>
     <!-- <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequatur eveniet dolorum laborum molestias totam suscipit architecto nostrum maxime minima. Officiis officia incidunt tempore pariatur suscipit dolores aliquam hic ad sunt!</p> -->
   </main>
   <footer>
     <hr class="my-3 mx-8 bg-transparent border-zinc-200 dark:border-zinc-700">
-    <p class="text-center pb-4">Made with ❤️ by <a href="https://github.com/arnav-kr" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-700 dark:text-sky-300 hover:underline">Arnav Kumar</a></p>
+    <p class="text-center pb-4">Made with ❤️ by <a href="https://github.com/arnav-kr" target="_blank"
+        rel="noopener noreferrer" class="font-semibold text-sky-700 dark:text-sky-300 hover:underline">Arnav Kumar</a>
+    </p>
   </footer>
 
   <script src="/src/main.js" type="module"></script>
