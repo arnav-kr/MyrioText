@@ -31,5 +31,6 @@ module.exports = {
     'border-color': ['disabled', 'focus'],
   },
   Plugins: [
+    require('@tailwindcss/forms'),
   ],
 }
