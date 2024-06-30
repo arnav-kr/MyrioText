@@ -6,13 +6,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* create a custom input component tailwind */
 @layer components {
   .input {
     @apply appearance-none mb-2 block w-full text-base min-w-56 p-2 bg-zinc-50 ring-inset shadow-sm border-0 focus:outline-0 dark:bg-zinc-800 rounded-md ring-1 focus:ring-sky-700 focus:ring-2 dark:focus:ring-sky-500 ring-zinc-300 dark:ring-zinc-700;
   }
   .label {
     @apply block font-semibold text-base mb-2;
+  }
+  .floating-button {
+    @apply p-3 rounded-md shadow-sm ring-1 bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-100 transition duration-100 ring-zinc-200 dark:ring-zinc-800 active:scale-[95%] ease-[ease];
   }
   .button {
     @apply w-full bg-sky-700 hover:bg-sky-600 active:scale-[99%] transition duration-150 ease-[ease] py-2 px-4 rounded-md shadow-sm;

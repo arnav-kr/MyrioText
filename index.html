@@ -23,19 +23,20 @@
   <!-- <link rel="manifest" href="manifest.webmanifest"> --><!-- Uncomment for PWA Support -->
 </head>
 
-<body class="flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
+<body
+  class="group/body tab-encode flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
   <header class="w-full flex justify-between items-center p-2 sm:p-8 pb-6 lg:pb-0">
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
     <nav
       class="relative rounded-md shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
       <label
         class="cursor-pointer rounded-md py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
-        <input type="radio" name="mode" value="encode" class="hidden" checked>
+        <input type="radio" name="mode" value="encode" class="mode hidden" checked>
         <span>Encode</span>
       </label>
       <label
         class="cursor-pointer rounded-md py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
-        <input type="radio" name="mode" value="decode" class="hidden">
+        <input type="radio" name="mode" value="decode" class="mode hidden">
         <span>Decode</span>
       </label>
     </nav>
@@ -51,15 +52,54 @@
   </header>
   <main
     class="flex flex-grow flex-col items-center lg:flex-row lg:justify-evenly w-full py-2 px-6 min-h-[calc(100% - 128px)]">
-    <section
-      class="min-w-36 min-h-36 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700"
-      role="presentation" aria-roledescription="Encoded Image Preview">
-      <canvas class="w-36 h-36" id="render"><span class="inline-block m-2">Huh, Your Browser Doesn't Support Canvas?
-          🤨</span></canvas>
+    <!-- output section -->
+    <section class="flex flex-col sm:flex-row gap-2 p-4 sm:justify-center items-center sm:items-start">
+      <!-- output canvas -->
+      <div
+        class="aspect-square w-full h-full min-w-56 min-h-56 sm:min-w-64 sm:min-h-64 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700"
+        role="presentation" aria-roledescription="Encoded Image Preview">
+        <canvas class="w-36 h-36 aspect-square" id="render">
+          <span class="inline-block m-2">Huh, Your Browser Doesn't Support Canvas? 🤨</span>
+        </canvas>
+      </div>
+
+      <!-- output actions -->
+      <div class="output-actions flex-row sm:flex-col gap-2 pb-2 flex">
+        <!-- download -->
+        <button id="download-button" type="button" class="floating-button" title="Download Image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path
+              d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+            <path
+              d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+          </svg>
+          <span class="font-semibold text-base text-zinc-50 hidden">Download</span>
+        </button>
+        <!-- copy -->
+        <button id="copy-button" type="button" class="floating-button" title="Copy Image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path
+              d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
+            <path
+              d="M4.5 6A1.5 1.5 0 0 0 3 7.5v9A1.5 1.5 0 0 0 4.5 18h7a1.5 1.5 0 0 0 1.5-1.5v-5.879a1.5 1.5 0 0 0-.44-1.06L9.44 6.439A1.5 1.5 0 0 0 8.378 6H4.5Z" />
+          </svg>
+          <span class="font-semibold text-base text-zinc-50 hidden">Copy</span>
+        </button>
+        <!-- share -->
+        <button id="share-button" type="button" class="floating-button" title="Share Image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+            <path
+              d="M13 4.5a2.5 2.5 0 1 1 .702 1.737L6.97 9.604a2.518 2.518 0 0 1 0 .792l6.733 3.367a2.5 2.5 0 1 1-.671 1.341l-6.733-3.367a2.5 2.5 0 1 1 0-3.475l6.733-3.366A2.52 2.52 0 0 1 13 4.5Z" />
+          </svg>
+          <span class="font-semibold text-base text-zinc-50 hidden">Share</span>
+        </button>
+      </div>
     </section>
-    <section class="w-full max-w-md p-4 rounded-lg">
+    <!-- control section -->
+    <section class="w-full max-w-md p-4">
       <!-- encode section -->
-      <section id="encode-section" role="form" aria-roledescription="Image Encoding Controls">
+      <section id="encode-section" class="hidden group-[.tab-encode]/body:block" role="form"
+        aria-roledescription="Image Encoding Controls">
         <!-- input text -->
         <label for="text" class="label">Enter Your Text to Encode:</label>
         <textarea id="text" class="resize input" rows="6"></textarea>
@@ -73,8 +113,7 @@
           <label for="live-convert" class="flex items-center cursor-pointer select-none">
             <div class="relative">
               <input type="checkbox" id="live-convert" class="peer sr-only" />
-              <div
-                class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
+              <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
               </div>
               <div
                 class="absolute w-3 h-3 transition bg-white rounded-full dot dark:bg-zinc-500 left-1 top-1 peer-checked:translate-x-full peer-checked:bg-white">
@@ -87,8 +126,7 @@
           <label for="use-encryption" class="flex items-center cursor-pointer select-none peer/use-encryption">
             <div class="relative">
               <input type="checkbox" id="use-encryption" class="use-encryption-checkbox peer sr-only" />
-              <div
-                class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
+              <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
               </div>
               <div
                 class="absolute w-3 h-3 transition bg-white rounded-full dot dark:bg-zinc-500 left-1 top-1 peer-checked:translate-x-full peer-checked:bg-white">
@@ -126,7 +164,26 @@
         </label> -->
       </section>
       <!-- decode section -->
-      <section id="decode-section" class="hidden" role="form" aria-roledescription="Image Decoding Controls">
+      <section id="decode-section" class="hidden group-[.tab-decode]/body:block" role="form"
+        aria-roledescription="Image Decoding Controls">
+        <!-- input image -->
+        <!-- an outlined card having a big placeholder icon on left side, and text on right side, saying, drop, paste, or click to upload image -->
+        <!-- upload button doesn't have default styles, its custom upload card -->
+        <label for="image-file"
+          class="w-full p-3 flex items-center gap-3 rounded-lg shadow-sm ring-1 ring-zinc-800 hover:bg-zinc-800 hover:bg-opacity-20 transition duration-150 ease-[ease]">
+          <div class="flex items-center justify-center aspect-square h-16 rounded-md bg-zinc-800 bg-opacity-65">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-9 opacity-70">
+              <path fill-rule="evenodd"
+                d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <span class="font-semibold text-base text-zinc-50">Drop, Paste, or Click to Upload an Image</span>
+          <input type="file" name="image-file" id="image-file" class="hidden">
+        </label>
+
+
+
         <!-- decode button -->
         <button id="decode-button" type="button" class="mt-3 button">
           <span class="font-semibold text-base text-zinc-50">Decode</span>
@@ -140,7 +197,6 @@
         rel="noopener noreferrer" class="font-semibold text-sky-700 dark:text-sky-300 hover:underline">Arnav Kumar</a>
     </p>
   </footer>
-
   <script src="/src/main.js" type="module"></script>
 </body>
 
