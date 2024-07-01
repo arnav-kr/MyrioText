@@ -1,18 +1,27 @@
 import './css/style.css';
 
-// modes
+// processing modes
 document.querySelectorAll(".mode").forEach((element) => {
-  console.log(element)
-  element.addEventListener("input", (e) => {
-    if (e.target.value == "encode") {
-      document.body.classList.add("tab-encode");
-      document.body.classList.remove("tab-decode");
-    } else {
-      document.body.classList.add("tab-decode");
-      document.body.classList.remove("tab-encode");
-    }
-  });
+  element.addEventListener("change", handleProcessingMode);
 });
+
+function handleProcessingMode(event) {
+  if (event.target.value == "encode") {
+    document.body.classList.add("tab-encode");
+    document.body.classList.remove("tab-decode");
+  } else {
+    document.body.classList.add("tab-decode");
+    document.body.classList.remove("tab-encode");
+  }
+}
+
+function openProcessingMode(mode) {
+  if (mode != "encode" && mode != "decode") return false;
+  let radio = document.getElementById(`${mode}-checkbox`);
+  radio.checked = true;
+  radio.dispatchEvent(new Event("change"));
+  return true;
+}
 
 // TODO: Uncomment the following lines to enable PWA Support
 // // PWAManager
