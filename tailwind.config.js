@@ -10,6 +10,10 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     },
     extend: {
+      screens: {
+        'xs': '321px',
+        'ms': '400px'
+      },
       spacing: {
         '8xl': '96rem',
         '9xl': '128rem',
