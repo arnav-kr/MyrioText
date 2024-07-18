@@ -2,9 +2,9 @@ export async function copy(data = "", name = "download") {
   let isImage = data instanceof Blob;
 
   if (data instanceof File) {
+    name = data.name;
     data = new Blob([data], { type: data.type });
     isImage = true;
-    name = data.name;
   }
 
   // use clipboard api if available
@@ -64,8 +64,8 @@ export async function copy(data = "", name = "download") {
 
 export function download(data, name = "download") {
   if (data instanceof File) {
-    data = new Blob([data], { type: data.type });
     name = data.name;
+    data = new Blob([data], { type: data.type });
   }
   let url = URL.createObjectURL(data);
   let a = document.createElement("a");
@@ -97,4 +97,13 @@ export async function share(file) {
   else {
     return { success: false, message: "Sharing Not Supported on This Device!" };
   }
+}
+
+export function uniqueID() {
+  return new Date().getTime().toString(36).slice(-6);
+}
+
+export async function getFile(canvas) {
+  let result = await fetch(canvas.toDataURL("image/png")).then(r => r.blob());
+  return new File([result], `${uniqueID()}_myrio.txt.png`, { type: "image/png" });
 }
