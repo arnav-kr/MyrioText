@@ -1,0 +1,100 @@
+export async function copy(data = "", name = "download") {
+  let isImage = data instanceof Blob;
+
+  if (data instanceof File) {
+    data = new Blob([data], { type: data.type });
+    isImage = true;
+    name = data.name;
+  }
+
+  // use clipboard api if available
+  if (navigator && navigator.clipboard) {
+    // check for permissions
+    const status = await navigator.permissions.query({
+      name: 'clipboard-write',
+    });
+    if (status.state == "granted") {
+      if (isImage) {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              [data.type]: data
+            })
+          ]);
+          return { success: true, message: "Copied Image Successfully!" };
+        } catch (e) {
+          console.error(e);
+          return { success: false, message: "An Error Occured While Copying Image!" };
+        }
+      } else {
+        try {
+          await navigator.clipboard.writeText(data);
+          return { success: true, message: "Copied Text Successfully!" };
+        }
+        catch (e) {
+          console.error(e);
+          return { success: false, message: "An Error Occured While Copying Text!" };
+        }
+      }
+    }
+    else {
+      return { success: false, message: "Clipboard Permission Denied!" };
+    }
+  }
+  // fallback to legacy trick otherwise
+  else {
+    if (isImage) {
+      return { success: false, message: "Copying Image Not Supported on This Device!" };
+    }
+    else {
+      let el = document.createElement('textarea');
+      el.value = data;
+      el.style.position = "fixed";
+      el.style.left = "-9999px";
+      el.style.top = "-9999px";
+
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      return { success: true, message: "Copied Text Successfully!" };
+    }
+  }
+}
+
+export function download(data, name = "download") {
+  if (data instanceof File) {
+    data = new Blob([data], { type: data.type });
+    name = data.name;
+  }
+  let url = URL.createObjectURL(data);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+  return { success: true, message: "Downloaded Successfully!" };
+}
+
+export async function share(file) {
+  if (navigator.canShare && navigator.canShare({
+    title: window.title,
+    files: [file]
+  })) {
+    try {
+      await navigator.share({
+        title: window.title,
+        text: "",
+        files: [file]
+      });
+      return { success: true, message: "Shared Successfully!" };
+    }
+    catch (e) {
+      console.error(e);
+      return { success: false, message: "An Error Occured While Sharing!" };
+    }
+  }
+  else {
+    return { success: false, message: "Sharing Not Supported on This Device!" };
+  }
+}

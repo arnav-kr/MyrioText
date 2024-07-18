@@ -2,7 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: ['**.{html,js,css}'],
-  dardMode: "class",
+  darkMode: "class",
   theme: {
     ...defaultTheme,
     fontFamily: {
@@ -12,7 +12,8 @@ module.exports = {
     extend: {
       screens: {
         'xs': '321px',
-        'ms': '400px'
+        'ms': '400px',
+        'xxl': '1440px',
       },
       spacing: {
         '8xl': '96rem',

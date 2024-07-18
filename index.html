@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -25,30 +25,48 @@
 
 <body
   class="group/body tab-decode flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
-  <header class="w-full flex justify-between items-center xs:p-4 p-2 sm:p-8 pb-6 lg:pb-0">
+  <header
+    class="w-full flex justify-between items-center gap-2 xs:p-4 scale-90 sm:scale-100 p-2 sm:p-8 pb-6 lg:pb-0 xxl:justify-around">
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
     <nav
-      class="relative rounded-md shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
+      class="relative rounded-[6px] shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
       <label
-        class="cursor-pointer rounded-md py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
+        class="cursor-pointer rounded-[4px] py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
         <input type="radio" name="mode" value="encode" class="mode hidden" id="encode-checkbox">
         <span>Encode</span>
       </label>
       <label
-        class="cursor-pointer rounded-md py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
+        class="cursor-pointer rounded-[4px] py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
         <input type="radio" name="mode" value="decode" class="mode hidden" id="decode-checkbox" checked>
         <span>Decode</span>
       </label>
     </nav>
-    <a href="https://github.com/arnav-kr/MyrioText" target="_blank" rel="noopener noreferrer"
-      title="Myrio Text GitHub Repo"
-      class="p-3 rounded-md shadow-sm ring-1 bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-100 transition duration-150 ring-zinc-200 dark:ring-zinc-800"><svg
-        role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-        class="w-7 h-7 fill-zinc-900 dark:fill-zinc-50">
-        <title>Myrio Text GitHub Repo</title>
-        <path
-          d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-      </svg></a>
+    <div class="flex gap-2 items-center justify-center">
+      <button class="floating-button aspect-square h-12 w-12"
+        onclick="document.documentElement.classList.toggle('dark')">
+        <!-- sun -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 stroke-zic-900 dark:stroke-zinc-50 hidden dark:block">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+        </svg>
+        <!-- moon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 stroke-zinc-900 dark:stroke-zinc-50 dark:hidden">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+        </svg>
+      </button>
+      <a href="https://github.com/arnav-kr/MyrioText" target="_blank" rel="noopener noreferrer"
+        title="Myrio Text GitHub Repo"
+        class="flex p-3 rounded-md shadow-sm ring-1 bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 hover:bg-zinc-100 transition duration-150 ring-zinc-200 dark:ring-zinc-800">
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+          class="w-7 h-7 fill-zinc-900 dark:fill-zinc-50">
+          <title>Myrio Text GitHub Repo</title>
+          <path
+            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+        </svg></a>
+    </div>
   </header>
   <main
     class="flex flex-grow flex-col items-center lg:flex-row lg:justify-evenly w-full py-2 px-6 min-h-[calc(100% - 128px)]">
@@ -66,7 +84,7 @@
       <!-- output actions -->
       <div class="output-actions flex-row sm:flex-col gap-2 pb-2 flex">
         <!-- download -->
-        <button id="download-button" type="button" class="floating-button" title="Download Image">
+        <a id="download-button" class="floating-button" title="Download Image">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
             <path
               d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
@@ -74,7 +92,7 @@
               d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
           </svg>
           <span class="font-semibold text-base text-zinc-50 hidden">Download</span>
-        </button>
+        </a>
         <!-- copy -->
         <button id="copy-button" type="button" class="floating-button" title="Copy Image">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
@@ -173,8 +191,7 @@
               rows="6" placeholder="Decoded text will show up here" readonly></textarea>
             <button id="copy-text-button" type="button"
               class="absolute right-0 top-0 p-3 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900 rounded-none rounded-bl-md rounded-tr-md dark:hover:bg-opacity-65 opacity-75 bg-zinc-50 transition duration-100  dark:bg-zinc-800 ease-[ease]">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                class="size-5 copy-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5 copy-icon">
                 <path
                   d="M7 3.5A1.5 1.5 0 0 1 8.5 2h3.879a1.5 1.5 0 0 1 1.06.44l3.122 3.12A1.5 1.5 0 0 1 17 6.622V12.5a1.5 1.5 0 0 1-1.5 1.5h-1v-3.379a3 3 0 0 0-.879-2.121L10.5 5.379A3 3 0 0 0 8.379 4.5H7v-1Z" />
                 <path
