@@ -51,7 +51,7 @@ encodeForm.addEventListener("input", async () => {
   // live mode
   let live = document.getElementById("live-convert");
   if (live.checked) {
-    let text = document.getElementById("input-text").value;
+    let text = document.getElementById("text-input").value;
     let unitSize = document.getElementById("unit-size").value;
     let key = useEncryption.checked ? document.getElementById("key").value : undefined;
     // encode text
