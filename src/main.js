@@ -36,17 +36,29 @@ document.getElementById("copy-text-button").addEventListener("click", async () =
 
 const encodeForm = document.getElementById("encode-form");
 const decodeForm = document.getElementById("decode-form");
+const useEncryption = document.getElementById("use-encryption");
+
+// handle encode submit
+encodeForm.addEventListener("submit", async (e) => {
+  
+});
 
 // encode form button state
-encodeForm.addEventListener("input", e => {
+encodeForm.addEventListener("input", () => {
   encodeForm.querySelector("#encode-button").disabled = !encodeForm.checkValidity();
 });
 
 // decode form button state
-decodeForm.addEventListener("input", e => {
+decodeForm.addEventListener("input", () => {
   decodeForm.querySelector("#decode-button").disabled = !decodeForm.checkValidity();
 });
 
+// require key when "use encryption"
+useEncryption.addEventListener("change", () => {
+  let keyInput = document.getElementById("key");
+  keyInput.required = useEncryption.checked;
+  encodeForm.dispatchEvent(new Event("input"));
+});
 
 function handleProcessingMode(event) {
   if (event.target.value == "encode") {
