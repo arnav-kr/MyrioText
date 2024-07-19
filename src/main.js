@@ -1,5 +1,6 @@
 import './css/style.css';
-import { getFile, copy, download, share, uniqueID } from "./js/utils";
+import { getFile, copy, download, share } from "./js/utils";
+import { encode, decode } from "./js/myrio";
 
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
@@ -40,16 +41,33 @@ const useEncryption = document.getElementById("use-encryption");
 
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
-  
+
 });
 
-// encode form button state
-encodeForm.addEventListener("input", () => {
+encodeForm.addEventListener("input", async () => {
+  // encode form button state
   encodeForm.querySelector("#encode-button").disabled = !encodeForm.checkValidity();
+
+  // live mode
+  let live = document.getElementById("live-convert");
+  if (live.checked) {
+    let text = document.getElementById("input-text").value;
+    let unitSize = document.getElementById("unit-size").value;
+    let key = useEncryption.checked ? document.getElementById("key").value : undefined;
+    // encode text
+    let encodedImageData = await encode(text, unitSize, key);
+    // render imagedata
+    let canvas = document.getElementById("render");
+    let ctx = canvas.getContext("2d");
+    canvas.width = encodedImageData.width;
+    canvas.height = encodedImageData.height;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.putImageData(encodedImageData, 0, 0);
+  }
 });
 
-// decode form button state
 decodeForm.addEventListener("input", () => {
+  // decode form button state
   decodeForm.querySelector("#decode-button").disabled = !decodeForm.checkValidity();
 });
 
