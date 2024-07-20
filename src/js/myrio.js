@@ -43,19 +43,19 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
     }
     if (colorData.length <= c) { break; }
   }
-
-  // for (var y = 0; y < size; y += size) {
-  //   for (var x = 0; x < size; x += size) {
-  //     ctx.fillStyle = "#" + data[c];
-  //     ctx.fillRect(x, y, size, size);
-  //     c++;
-  //     if (data.length <= c) { break; }
-  //   }
-  //   if (data.length <= c) { break; }
-  // }
-  // return imgData;
 }
 
-export async function decode(image) {
+export async function decode(imgData) {
+  // get first pixel and extract metadata
+  let metadata = imgData[0];
+  let unitSize = parseInt(metadata[0], 16);
+  let isEncrypted = metadata[1] === "11";
+  let type = metadata[2];
+  let version = metadata[3];
 
+  // now use unitSize info to get the centre of each individual unit pixel and remove rest of data from the image data, then use textEncoder to decode it back to text
+  // as unitSize can be any number, we need to get the centre of each pixel, and get color data from that pixel, that'd be possible by offesing the values and only keep the data from centre of pixels
+  let data = imgData.slice(1).map(i => parseInt(i, 16));
+  
+  return isEncrypted ? await decrypt(data) : data;
 }

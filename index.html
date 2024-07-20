@@ -219,10 +219,16 @@
               </svg>
             </div>
             <div class="text-zinc-800 dark:text-zinc-100">
-              <span class="text-base font-semibold">Upload Image</span><br>
-              <span class="text-sm">Drop, Paste, or Click to Upload an Image</span>
+              <span class="text-base font-semibold">
+                <span id="file-count" class="peer"></span>
+                <span class="peer-empty:inline hidden">Upload Image</span>
+                <br>
+                <span class="text-sm">
+                  <span id="file-name" class="peer overflow-truncate"></span>
+                  <span class="peer-empty:inline hidden">Drop, Paste, or Click to Upload an Image</span>
+                </span>
             </div>
-            <input type="file" name="image-file" id="image-file" class="hidden" required>
+            <input type="file" name="image-file" id="image-file" class="hidden" accept="image/png" required>
           </label>
 
           <!-- decode button -->

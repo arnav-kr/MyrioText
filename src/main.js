@@ -38,6 +38,7 @@ document.getElementById("copy-text-button").addEventListener("click", async () =
 const encodeForm = document.getElementById("encode-form");
 const decodeForm = document.getElementById("decode-form");
 const useEncryption = document.getElementById("use-encryption");
+const imageInput = document.getElementById("image-file");
 
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
@@ -70,6 +71,16 @@ useEncryption.addEventListener("change", () => {
   let keyInput = document.getElementById("key");
   keyInput.required = useEncryption.checked;
   encodeForm.dispatchEvent(new Event("input"));
+});
+// process image file
+imageInput.addEventListener("change", async () => {
+  let file = imageInput.files[0];
+  let { name, size, type } = file;
+  if (type !== "image/png") throw new Error("Only Images are allowed");
+  document.getElementById("file-count").textContent = `1 File Uploaded`;
+  document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024)} KB)`;
+  
+
 });
 
 function handleProcessingMode(event) {
