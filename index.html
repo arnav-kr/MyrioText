@@ -24,7 +24,7 @@
 </head>
 
 <body
-  class="group/body tab-decode flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
+  class="group/body tab-encode flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
   <header
     class="w-full flex justify-between items-center gap-2 xs:p-4 scale-90 sm:scale-100 p-2 sm:p-8 pb-6 lg:pb-0 xxl:justify-around">
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
@@ -32,12 +32,12 @@
       class="relative rounded-[6px] shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
       <label
         class="cursor-pointer rounded-[4px] py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
-        <input type="radio" name="mode" value="encode" class="mode hidden" id="encode-checkbox">
+        <input type="radio" name="mode" value="encode" class="mode hidden" id="encode-checkbox" checked>
         <span>Encode</span>
       </label>
       <label
         class="cursor-pointer rounded-[4px] py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
-        <input type="radio" name="mode" value="decode" class="mode hidden" id="decode-checkbox" checked>
+        <input type="radio" name="mode" value="decode" class="mode hidden" id="decode-checkbox">
         <span>Decode</span>
       </label>
     </nav>
@@ -74,9 +74,9 @@
     <section class="flex flex-col sm:flex-row gap-2 p-4 sm:justify-center items-center sm:items-start">
       <!-- output canvas -->
       <div
-        class="aspect-square w-full h-full max-w-md min-w-56 min-h-56 sm:min-w-64 sm:min-h-64 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700 overflow-auto"
+        class="aspect-square p-1.5 w-full h-full flex justify-center items-center max-w-xs min-w-56 min-h-56 sm:min-w-64 sm:min-h-64 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700 overflow-auto"
         role="presentation" aria-roledescription="Encoded Image Preview">
-        <canvas class="aspect-square" id="render">
+        <canvas class="max-w-full" id="render" width="16" height="16">
           <span class="inline-block m-2">Huh, Your Browser Doesn't Support Canvas? 🤨</span>
         </canvas>
       </div>
@@ -124,7 +124,7 @@
 
           <!-- unit size -->
           <label for="unit-size" class="label">Unit Size:</label>
-          <input type="number" id="unit-size" class="input" value="5" min="1" max="100" required>
+          <input type="number" id="unit-size" class="input" value="10" min="1" max="100" required>
 
           <div class="flex flex-col ms:flex-row gap-4 py-2 peer">
             <!-- live convert -->
