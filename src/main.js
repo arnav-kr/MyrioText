@@ -52,17 +52,11 @@ encodeForm.addEventListener("input", async () => {
   let live = document.getElementById("live-convert");
   if (live.checked) {
     let text = document.getElementById("text-input").value;
-    let unitSize = document.getElementById("unit-size").value;
+    let unitSize = parseInt(document.getElementById("unit-size").value);
     let key = useEncryption.checked ? document.getElementById("key").value : undefined;
     // encode text
-    let encodedImageData = await encode(text, unitSize, key);
-    // render imagedata
     let canvas = document.getElementById("render");
-    let ctx = canvas.getContext("2d");
-    canvas.width = encodedImageData.width;
-    canvas.height = encodedImageData.height;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.putImageData(encodedImageData, 0, 0);
+    await encode({ text, canvas, unitSize, key });
   }
 });
 

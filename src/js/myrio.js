@@ -1,46 +1,59 @@
 import { encrypt, decrypt } from "./aes";
 
-export async function encode(text, unitSize, key) {
+export async function encode({ text, canvas, unitSize = 4, key }) {
+  if (!text) {
+    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return false;
+  };
   let data = !key ? text : await encrypt(text, key);
-
+  if (typeof unitSize !== "number") { throw new Error("Unit size must be a number") }
   // keep first 4 pixels for metadata
   let metadata = []
   // 1: unit size
-  metadata.push(unitSize);
+  metadata.push(unitSize.toString(16));
   // 2: is encrypted
-  metadata.push(key ? 1 : 0);
+  metadata.push(key ? "11" : "00");
   // 3: type of encoding (only 0 for now)
-  metadata.push(0);
+  metadata.push("00");
   // 4: version code (0 for now)
-  metadata.push(0);
+  metadata.push("00");
 
 
-  // array of [r, g, b, a] values
   let colorData = [metadata];
   for (let char of data) {
-    let code = Array.from(new TextEncoder().encode(char));
-    while (code.length < 4) {
-      code.unshift(0);
-    }
-    colorData.push(code);
+    let code = Array.from(new TextEncoder("utf-8").encode(char)).map(i => i.toString(16));
+    colorData.push(code.join("").padStart(8, 0));
   }
-  let size = Math.ceil(Math.sqrt(colorData.length * Math.pow(unitSize, 2))) + unitSize;
-  let imgData = new ImageData(size, size);
-  for (let i = 0; i < size; i+= 4 * unitSize) {
-    for (let j = 0; j < size; j++) {
-      let index = i * size + j;
-      console.log(index)
-      let color = colorData[Math.floor(index / Math.pow(unitSize, 2))];
-      let unit = Math.floor((index % Math.pow(unitSize, 2)) / unitSize);
-      let offset = (index % Math.pow(unitSize, 2)) % unitSize;
-      let pixelIndex = (i * size + j) * 4;
-      imgData.data[pixelIndex] = color[0];
-      imgData.data[pixelIndex + 1] = color[1];
-      imgData.data[pixelIndex + 2] = color[2];
-      imgData.data[pixelIndex + 3] = color[3];
+  let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
+
+  if (!canvas) { throw new Error("Canvas is required to draw") }
+  var ctx = canvas.getContext("2d");
+  canvas.width = size;
+  canvas.height = size;
+  var c = 0;
+  ctx.clearRect(0, 0, size, size);
+  for (let y = 0; y < size; y += unitSize) {
+    for (let x = 0; x < size; x += unitSize) {
+      ctx.fillStyle = `#${colorData[c]}`;
+      console.log(x, y, unitSize, colorData[c]);
+      ctx.fillRect(x, y, unitSize, unitSize);
+      c++;
+      if (colorData.length <= c) { break; }
     }
+    if (colorData.length <= c) { break; }
   }
-  return imgData;
+
+  // for (var y = 0; y < size; y += size) {
+  //   for (var x = 0; x < size; x += size) {
+  //     ctx.fillStyle = "#" + data[c];
+  //     ctx.fillRect(x, y, size, size);
+  //     c++;
+  //     if (data.length <= c) { break; }
+  //   }
+  //   if (data.length <= c) { break; }
+  // }
+  // return imgData;
 }
 
 export async function decode(image) {

@@ -74,9 +74,9 @@
     <section class="flex flex-col sm:flex-row gap-2 p-4 sm:justify-center items-center sm:items-start">
       <!-- output canvas -->
       <div
-        class="aspect-square w-full h-full min-w-56 min-h-56 sm:min-w-64 sm:min-h-64 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700"
+        class="aspect-square w-full h-full max-w-md min-w-56 min-h-56 sm:min-w-64 sm:min-h-64 bg-zinc-50 dark:bg-zinc-800 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-700 overflow-auto"
         role="presentation" aria-roledescription="Encoded Image Preview">
-        <canvas class="w-36 h-36 aspect-square" id="render">
+        <canvas class="aspect-square" id="render">
           <span class="inline-block m-2">Huh, Your Browser Doesn't Support Canvas? 🤨</span>
         </canvas>
       </div>
