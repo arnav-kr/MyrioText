@@ -78,9 +78,19 @@ imageInput.addEventListener("change", async () => {
   let { name, size, type } = file;
   if (type !== "image/png") throw new Error("Only Images are allowed");
   document.getElementById("file-count").textContent = `1 File Uploaded`;
-  document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024)} KB)`;
-  
+  document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
 
+  let canvas = document.getElementById("render");
+  let ctx = canvas.getContext("2d");
+  let img = new Image();
+  img.src = URL.createObjectURL(file);
+  img.onload = async () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    await decode(imgData);
+  };
 });
 
 function handleProcessingMode(event) {
