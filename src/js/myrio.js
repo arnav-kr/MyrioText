@@ -21,6 +21,7 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
 
 
   let colorData = [metadata.map(i => i.toString(16).padStart(2, 0)).join("")];
+  console.log(colorData);
   for (let char of data) {
     let code = Array.from(new TextEncoder("utf-8").encode(char)).map(i => i.toString(16));
     colorData.push(code.join("").padStart(8, 0));
@@ -28,7 +29,10 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
-  var ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d", {
+    willReadFrequently: true,
+    colorSpace: "display-p3",
+  });
   canvas.width = size;
   canvas.height = size;
   var c = 0;
@@ -45,18 +49,40 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   }
 }
 
-export async function decode(imgData) {
-  console.log(imgData)
+export async function decode({ canvas, key }) {
+  canvas.willReadFrequently = true;
+  canvas.colorSpace = "display-p3";
+  let ctx = canvas.getContext("2d", {
+    willReadFrequently: true,
+    colorSpace: "display-p3",
+  });
 
-  let metadata = imgData.data[0];
-  let unitSize = parseInt(metadata[0], 16);
-  let isEncrypted = metadata[1] === "11";
+  console.log(ctx.getImageData(0, 0, 1, 1));
+  let metadata = Array.from(ctx.getImageData(0, 0, 1, 1).data);
+  let version = metadata[0];
+  let isEncrypted = metadata[1] === 255;
   let type = metadata[2];
-  let version = metadata[3];
+  let unitSize = metadata[3];
+  console.log("Metadata:", { version, isEncrypted, type, unitSize });
 
-  let data = imgData.data.slice(1).map(i => parseInt(i, 16));
-  console.log(unitSize, isEncrypted, type, version);
-  console.log(data);
-
-  return isEncrypted ? await decrypt(data) : data;
+  let result = []
+  for (var y = 0; y < canvas.width; y += unitSize) {
+    for (var x = 0; x < canvas.height; x += unitSize) {
+      var imageData = ctx.getImageData(x + unitSize / 2, y + unitSize / 2, 1, 1);
+      result.push(
+        new TextDecoder('utf-8')
+          .decode(
+            new Uint8ClampedArray(
+              imageData.data.filter(c => c !== 0)
+            )
+          )
+      );
+    }
+  }
+  let decodedText = result.join("").trim();
+  if (key) {
+    decodedText = await decrypt(decodedText, key);
+  }
+  console.log("Decoded:", decodedText);
+  return decodedText;
 }

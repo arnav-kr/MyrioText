@@ -88,8 +88,8 @@ imageInput.addEventListener("change", async () => {
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
-    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    await decode(imgData);
+    let decodedText = await decode({ canvas, undefined});
+    document.getElementById("output-text").value = decodedText;
   };
 });
 
