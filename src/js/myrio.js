@@ -1,5 +1,5 @@
 import { encrypt, decrypt } from "./aes";
-import { deflate } from "pako";
+import { deflate, inflate } from "pako";
 
 export async function encode({ text, canvas, unitSize = 4, key }) {
   if (!text) {
@@ -12,14 +12,14 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
 
   // keep first 4 pixels for metadata
   let metadata = new Uint8Array(4);
-  // 1: version code (0 for now)
-  metadata.set([0], 0);
-  // 2: is encrypted
-  metadata.set(key ? [255] : [0], 1);
-  // 3: type of encoding (only 0 for now)
-  metadata.set([0], 2);
-  // 4: unit size
-  metadata.set([unitSize], 3);
+  // 1: unit size
+  metadata.set([unitSize], 0);
+  // 2: version code (0 for now)
+  metadata.set([0], 1);
+  // 3: is encrypted
+  metadata.set(key ? [255] : [0], 2);
+  // 4: type of encoding (only 0 for now)
+  metadata.set([0], 3);
 
   let compressed = deflate(data);
 
@@ -33,6 +33,7 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   for (let code of codePoints) {
     colorData.push(code.toString(16).padStart(8, 0));
   }
+  console.log(colorData)
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
@@ -62,30 +63,32 @@ export async function decode({ canvas, key }) {
     willReadFrequently: true
   });
 
-  console.log(ctx.getImageData(0, 0, 1, 1));
-  let metadata = Array.from(ctx.getImageData(0, 0, 1, 1).data);
-  let version = metadata[0];
-  let isEncrypted = metadata[1] === 255;
-  let type = metadata[2];
-  let unitSize = metadata[3];
+  let metadata = new Array(4);
+  metadata[0] = ctx.getImageData(0, 0, 1, 1).data[3];
+  let unitSize = metadata[0];
+  for (let i = 1; i < 4; i++) {
+    let imageData = ctx.getImageData(i * unitSize, 0, 1, 1);
+    metadata[i] = imageData.data.filter(c => c !== 0)[0] ?? 0;
+  }
+  let version = metadata[1];
+  let isEncrypted = metadata[2] === 255;
+  let type = metadata[3];
   console.log("Metadata:", { version, isEncrypted, type, unitSize });
 
-  let result = []
-  for (var y = 0; y < canvas.width; y += unitSize) {
-    for (var x = 0; x < canvas.height; x += unitSize) {
-      var imageData = ctx.getImageData(x + unitSize / 2, y + unitSize / 2, 1, 1);
+  let result = [];
+  for (var y = 0; y < canvas.height; y += unitSize) {
+    for (var x = 0; x < canvas.width; x += unitSize) {
+      if (x < 4 * unitSize && y == 0) continue;
+      console.log(x, y)
+      var imageData = ctx.getImageData(x, y, 1, 1);
       console.log(imageData.data);
       result.push(
-        new TextDecoder('utf-8')
-          .decode(
-            new Uint8ClampedArray(
-              imageData.data.filter(c => c !== 0)
-            )
-          )
+        imageData.data.filter(c => c !== 0)[0] ?? 0
       );
     }
   }
-  let decodedText = result.join("").trim();
+  console.log(result);
+  let decodedText = inflate(new Uint8Array(result), { to: "string" });
   if (key) {
     decodedText = await decrypt(decodedText, key);
   }
