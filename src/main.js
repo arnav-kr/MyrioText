@@ -92,6 +92,27 @@ decodeForm.addEventListener("decryption-key", (e) => {
 // process image file
 imageInput.addEventListener("change", handleDecode);
 
+// shortcut keys handler
+document.addEventListener("keydown", (e) => {
+  // ignore if input
+  if (e.target.tagName === "INPUT") return;
+  /**
+   * Encode: Shift + Alt + E 
+   * Decode: Shift + Alt + D
+   */
+  if (e.altKey && e.shiftKey) {
+    let key = e.key.toLowerCase();
+    switch (key) {
+      case "e":
+        openProcessingMode("encode");
+        break;
+      case "d":
+        openProcessingMode("decode");
+        break;
+    }
+  }
+});
+
 async function handleDecode(e) {
   e.preventDefault();
 

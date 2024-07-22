@@ -72,8 +72,8 @@ export async function decode({ canvas, key }) {
   let type = metadata[3];
   console.log("Metadata:", { version, isEncrypted, type, unitSize });
 
-  if(isEncrypted && !key) {
-    return {success: false,  type: "requires_key", message: "This image is encrypted, please provide a key to decrypt"};
+  if (isEncrypted && !key) {
+    return { success: false, type: "requires_key", message: "This image is encrypted, please provide a key to decrypt" };
   }
 
   let result = [];
@@ -90,5 +90,5 @@ export async function decode({ canvas, key }) {
   if (key) {
     decodedText = await decrypt(decodedText, key);
   }
-  return {success: true, data: decodedText}
+  return { success: true, data: decodedText }
 }
