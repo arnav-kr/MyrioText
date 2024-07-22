@@ -120,17 +120,17 @@
         <form id="encode-form">
           <!-- input text -->
           <label for="text-input" class="label">Enter Your Text to Encode:</label>
-          <textarea id="text-input" class="resize input" rows="6" required></textarea>
+          <textarea id="text-input" name="text-input" class="resize input" rows="6" required></textarea>
 
           <!-- unit size -->
           <label for="unit-size" class="label">Unit Size:</label>
-          <input type="number" id="unit-size" class="input" value="10" min="1" max="100" required>
+          <input type="number" id="unit-size" name="unit-size" class="input" value="10" min="1" max="100" required>
 
           <div class="flex flex-col ms:flex-row gap-4 py-2 peer">
             <!-- live convert -->
             <label for="live-convert" class="flex items-center cursor-pointer select-none">
               <div class="relative">
-                <input type="checkbox" id="live-convert" class="peer sr-only" checked />
+                <input type="checkbox" id="live-convert" name="live-convert" class="peer sr-only" checked />
                 <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
                 </div>
                 <div
@@ -143,7 +143,8 @@
             <!-- use encryption -->
             <label for="use-encryption" class="flex items-center cursor-pointer select-none peer/use-encryption">
               <div class="relative">
-                <input type="checkbox" id="use-encryption" class="use-encryption-checkbox peer sr-only" />
+                <input type="checkbox" id="use-encryption" name="use-encryption"
+                  class="use-encryption-checkbox peer sr-only" />
                 <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
                 </div>
                 <div
@@ -160,7 +161,7 @@
           <!-- encryption key input -->
           <div class="hidden peer-checked:block mt-2 peer-has-[.use-encryption-checkbox:checked]:block">
             <label for="key" class="label">Encryption Key:</label>
-            <input type="text" id="key" class="input">
+            <input type="text" id="key" name="key" class="input">
           </div>
 
           <!-- encode button -->
@@ -187,7 +188,7 @@
         <form id="decode-form">
           <!-- decoded text -->
           <div class="relative">
-            <textarea id="output-text"
+            <textarea id="output-text" name="output-text"
               class="resize input mb-6 focus:ring-1 focus:ring-zinc-300 dark:focus:ring-zinc-700" rows="6"
               placeholder="Decoded text will show up here" readonly></textarea>
             <button id="copy-text-button" type="button"
@@ -230,6 +231,11 @@
             </div>
             <input type="file" name="image-file" id="image-file" class="hidden" accept="image/png" required>
           </label>
+          <!-- decryption key -->
+          <div class="hidden mt-2">
+            <label for="decryption-key" class="label">Decryption Key:</label>
+            <input type="text" id="decryption-key" name="decryption-key" class="input" />
+          </div>
 
           <!-- decode button -->
           <button id="decode-button" type="submit" class="mt-3 button" disabled>

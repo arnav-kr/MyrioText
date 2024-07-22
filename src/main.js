@@ -1,9 +1,6 @@
 import './css/style.css';
 import { getFile, copy, download, share } from "./js/utils";
 import { encode, decode } from "./js/myrio";
-import { deflate } from 'pako';
-
-window.deflate = deflate
 
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
@@ -45,8 +42,17 @@ const imageInput = document.getElementById("image-file");
 
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
-
+  e.preventDefault();
+  let text = document.getElementById("text-input").value;
+  let unitSize = parseInt(document.getElementById("unit-size").value);
+  let key = useEncryption.checked ? document.getElementById("key").value : null;
+  // encode text
+  let canvas = document.getElementById("render");
+  await encode({ text, canvas, unitSize, key });
 });
+
+// handle decode submit
+decodeForm.addEventListener("submit", handleDecode);
 
 encodeForm.addEventListener("input", async () => {
   // encode form button state
@@ -57,7 +63,7 @@ encodeForm.addEventListener("input", async () => {
   if (live.checked) {
     let text = document.getElementById("text-input").value;
     let unitSize = parseInt(document.getElementById("unit-size").value);
-    let key = useEncryption.checked ? document.getElementById("key").value : undefined;
+    let key = useEncryption.checked ? document.getElementById("key").value : null;
     // encode text
     let canvas = document.getElementById("render");
     await encode({ text, canvas, unitSize, key });
@@ -75,13 +81,28 @@ useEncryption.addEventListener("change", () => {
   keyInput.required = useEncryption.checked;
   encodeForm.dispatchEvent(new Event("input"));
 });
+
+decodeForm.addEventListener("decryption-key", (e) => {
+  let keyInput = document.getElementById("decryption-key");
+  keyInput.closest("div").classList.toggle("hidden", !e.detail.isRequired);
+  keyInput.required = e.detail.isRequired;
+  decodeForm.reportValidity();
+});
+
 // process image file
-imageInput.addEventListener("change", async () => {
+imageInput.addEventListener("change", handleDecode);
+
+async function handleDecode(e) {
+  e.preventDefault();
+
   let file = imageInput.files[0];
   let { name, size, type } = file;
   if (type !== "image/png") throw new Error("Only Images are allowed");
   document.getElementById("file-count").textContent = `1 File Uploaded`;
   document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
+
+  let key = document.getElementById("decryption-key").value
+  key = key == "" ? null : key;
 
   let canvas = document.getElementById("render");
   let ctx = canvas.getContext("2d",);
@@ -91,10 +112,19 @@ imageInput.addEventListener("change", async () => {
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
-    let decodedText = await decode({ canvas, undefined });
-    document.getElementById("output-text").value = decodedText;
+    let result = await decode({ canvas, key });
+    if (!result.success && result.type === "requires_key") {
+      return decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: true } }))
+    }
+    if (!result.success && result.type !== "requires_key") {
+      decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
+    }
+    if (result.success) {
+      let decodedText = result.data;
+      document.getElementById("output-text").value = decodedText;
+    }
   };
-});
+}
 
 function handleProcessingMode(event) {
   if (event.target.value == "encode") {

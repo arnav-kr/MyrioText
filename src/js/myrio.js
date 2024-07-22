@@ -26,14 +26,12 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   let codePoints = new Uint8Array(metadata.length + compressed.length);
   codePoints.set(metadata, 0);
   codePoints.set(compressed, 4);
-  console.log(codePoints);
 
   let colorData = [];
 
   for (let code of codePoints) {
     colorData.push(code.toString(16).padStart(8, 0));
   }
-  console.log(colorData)
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
@@ -48,7 +46,6 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   for (let y = 0; y < size; y += unitSize) {
     for (let x = 0; x < size; x += unitSize) {
       ctx.fillStyle = `#${colorData[c]}`;
-      console.log(x, y, unitSize, colorData[c]);
       ctx.fillRect(x, y, unitSize, unitSize);
       c++;
       if (colorData.length <= c) { break; }
@@ -75,23 +72,23 @@ export async function decode({ canvas, key }) {
   let type = metadata[3];
   console.log("Metadata:", { version, isEncrypted, type, unitSize });
 
+  if(isEncrypted && !key) {
+    return {success: false,  type: "requires_key", message: "This image is encrypted, please provide a key to decrypt"};
+  }
+
   let result = [];
   for (var y = 0; y < canvas.height; y += unitSize) {
     for (var x = 0; x < canvas.width; x += unitSize) {
       if (x < 4 * unitSize && y == 0) continue;
-      console.log(x, y)
       var imageData = ctx.getImageData(x, y, 1, 1);
-      console.log(imageData.data);
       result.push(
         imageData.data.filter(c => c !== 0)[0] ?? 0
       );
     }
   }
-  console.log(result);
   let decodedText = inflate(new Uint8Array(result), { to: "string" });
   if (key) {
     decodedText = await decrypt(decodedText, key);
   }
-  console.log("Decoded:", decodedText);
-  return decodedText;
+  return {success: true, data: decodedText}
 }
