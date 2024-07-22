@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/arnav-kr/MyrioText/issues"
   },
-  "homepage": "https://github.com/arnav-kr/MyrioText#readme"
+  "homepage": "https://github.com/arnav-kr/MyrioText#readme",
+  "dependencies": {
+    "pako": "^2.1.0"
+  }
 }

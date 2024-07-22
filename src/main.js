@@ -1,6 +1,9 @@
 import './css/style.css';
 import { getFile, copy, download, share } from "./js/utils";
 import { encode, decode } from "./js/myrio";
+import { deflate } from 'pako';
+
+window.deflate = deflate
 
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
@@ -81,14 +84,14 @@ imageInput.addEventListener("change", async () => {
   document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
 
   let canvas = document.getElementById("render");
-  let ctx = canvas.getContext("2d");
+  let ctx = canvas.getContext("2d",);
   let img = new Image();
   img.src = URL.createObjectURL(file);
   img.onload = async () => {
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
-    let decodedText = await decode({ canvas, undefined});
+    let decodedText = await decode({ canvas, undefined });
     document.getElementById("output-text").value = decodedText;
   };
 });

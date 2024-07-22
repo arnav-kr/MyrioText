@@ -1,4 +1,5 @@
 import { encrypt, decrypt } from "./aes";
+import { deflate } from "pako";
 
 export async function encode({ text, canvas, unitSize = 4, key }) {
   if (!text) {
@@ -8,30 +9,36 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
   };
   let data = !key ? text : await encrypt(text, key);
   if (typeof unitSize !== "number") { throw new Error("Unit size must be a number") }
+
   // keep first 4 pixels for metadata
-  let metadata = []
+  let metadata = new Uint8Array(4);
   // 1: version code (0 for now)
-  metadata.push(0);
+  metadata.set([0], 0);
   // 2: is encrypted
-  metadata.push(key ? 255 : 0);
+  metadata.set(key ? [255] : [0], 1);
   // 3: type of encoding (only 0 for now)
-  metadata.push(0);
+  metadata.set([0], 2);
   // 4: unit size
-  metadata.push(unitSize);
+  metadata.set([unitSize], 3);
 
+  let compressed = deflate(data);
 
-  let colorData = [metadata.map(i => i.toString(16).padStart(2, 0)).join("")];
-  console.log(colorData);
-  for (let char of data) {
-    let code = Array.from(new TextEncoder("utf-8").encode(char)).map(i => i.toString(16));
-    colorData.push(code.join("").padStart(8, 0));
+  let codePoints = new Uint8Array(metadata.length + compressed.length);
+  codePoints.set(metadata, 0);
+  codePoints.set(compressed, 4);
+  console.log(codePoints);
+
+  let colorData = [];
+
+  for (let code of codePoints) {
+    colorData.push(code.toString(16).padStart(8, 0));
   }
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
   var ctx = canvas.getContext("2d", {
-    willReadFrequently: true,
     colorSpace: "display-p3",
+    willReadFrequently: true
   });
   canvas.width = size;
   canvas.height = size;
@@ -50,11 +57,9 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
 }
 
 export async function decode({ canvas, key }) {
-  canvas.willReadFrequently = true;
-  canvas.colorSpace = "display-p3";
   let ctx = canvas.getContext("2d", {
-    willReadFrequently: true,
     colorSpace: "display-p3",
+    willReadFrequently: true
   });
 
   console.log(ctx.getImageData(0, 0, 1, 1));
@@ -69,6 +74,7 @@ export async function decode({ canvas, key }) {
   for (var y = 0; y < canvas.width; y += unitSize) {
     for (var x = 0; x < canvas.height; x += unitSize) {
       var imageData = ctx.getImageData(x + unitSize / 2, y + unitSize / 2, 1, 1);
+      console.log(imageData.data);
       result.push(
         new TextDecoder('utf-8')
           .decode(
