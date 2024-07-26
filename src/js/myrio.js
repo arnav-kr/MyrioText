@@ -8,14 +8,18 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
     return false;
   };
   let data = !key ? text : await encrypt(text, key);
-  if (typeof unitSize !== "number") { throw new Error("Unit size must be a number") }
-
+  if (typeof unitSize !== "number") {
+    return { success: false, type: "invalid_unit_size", message: "Unit size must be a number" };
+  }
+  if (!Number.isInteger(unitSize) || unitSize <= 0) {
+    return { success: false, type: "invalid_unit_size", message: "Unit size must be an positive natural number" };
+  }
   // keep first 4 pixels for metadata
   let metadata = new Uint8Array(4);
   // 1: unit size
   metadata.set([unitSize], 0);
-  // 2: version code (0 for now)
-  metadata.set([0], 1);
+  // 2: version code (1 for now)
+  metadata.set([1], 1);
   // 3: is encrypted
   metadata.set(key ? [255] : [0], 2);
   // 4: type of encoding (only 0 for now)
@@ -61,7 +65,16 @@ export async function decode({ canvas, key }) {
   });
 
   let metadata = new Array(4);
-  metadata[0] = ctx.getImageData(0, 0, 1, 1).data[3];
+  try {
+    metadata[0] = ctx.getImageData(0, 0, 1, 1).data[3];
+    if (metadata[0] <= 0 || !Number.isInteger(metadata[0])) {
+      return { success: false, type: "invalid_image", message: "Invalid Image" };
+    }
+  }
+  catch (e) {
+    console.log(e)
+    return { success: false, type: "invalid_image", message: "Invalid Image" };
+  }
   let unitSize = metadata[0];
   for (let i = 1; i < 4; i++) {
     let imageData = ctx.getImageData(i * unitSize, 0, 1, 1);
@@ -70,7 +83,15 @@ export async function decode({ canvas, key }) {
   let version = metadata[1];
   let isEncrypted = metadata[2] === 255;
   let type = metadata[3];
-  console.log("Metadata:", { version, isEncrypted, type, unitSize });
+  console.log("Metadata:", { unitSize, version, isEncrypted, type });
+
+  if (version === 0) {
+    return { success: false, type: "invalid_image", message: "Invalid Image" };
+  }
+
+  if (canvas.width !== canvas.height) {
+    return { success: false, type: "invalid_image", message: "Invalid Image" };
+  }
 
   if (isEncrypted && !key) {
     return { success: false, type: "requires_key", message: "This image is encrypted, please provide a key to decrypt" };
@@ -86,7 +107,17 @@ export async function decode({ canvas, key }) {
       );
     }
   }
-  let decodedText = inflate(new Uint8Array(result), { to: "string" });
+  let decodedText;
+  try {
+    decodedText = inflate(new Uint8Array(result), { to: "string" });
+  }
+  catch (e) {
+    if (isEncrypted) {
+      return { success: false, type: "invalid_credentials", message: "Invalid Credentials" };
+    } else {
+      return { success: false, type: "invalid_image", message: "Invalid Image" };
+    }
+  }
   if (key) {
     decodedText = await decrypt(decodedText, key);
   }

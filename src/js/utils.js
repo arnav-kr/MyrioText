@@ -107,3 +107,29 @@ export async function getFile(canvas) {
   let result = await fetch(canvas.toDataURL("image/png")).then(r => r.blob());
   return new File([result], `${uniqueID()}_myrio.txt.png`, { type: "image/png" });
 }
+
+// Toast
+export class Toast {
+  constructor({ message = "", type = "info", duration = 3000 }) {
+    this.message = message;
+    this.type = type;
+    this.duration = duration;
+    this.create();
+  }
+
+  create() {
+    let toast = document.createElement("div");
+    toast.classList.add("toast", this.type);
+    toast.textContent = this.message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, this.duration);
+    }, 100);
+  }
+}

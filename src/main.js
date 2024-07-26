@@ -1,5 +1,5 @@
 import './css/style.css';
-import { getFile, copy, download, share } from "./js/utils";
+import { getFile, copy, download, share, Toast } from "./js/utils";
 import { encode, decode } from "./js/myrio";
 
 // processing modes
@@ -54,6 +54,19 @@ encodeForm.addEventListener("submit", async (e) => {
 // handle decode submit
 decodeForm.addEventListener("submit", handleDecode);
 
+// decode on drop
+
+
+// decode on paste
+document.addEventListener('paste', function (e) {
+  // Get the data of clipboard
+  if (!e.clipboardData) return false;
+  console.log(e.clipboardData.files);
+  imageInput.files = e.clipboardData.files;
+  openProcessingMode("decode");
+  imageInput.dispatchEvent(new Event("change"));
+});
+
 encodeForm.addEventListener("input", async () => {
   // encode form button state
   encodeForm.querySelector("#encode-button").disabled = !encodeForm.checkValidity();
@@ -66,7 +79,10 @@ encodeForm.addEventListener("input", async () => {
     let key = useEncryption.checked ? document.getElementById("key").value : null;
     // encode text
     let canvas = document.getElementById("render");
-    await encode({ text, canvas, unitSize, key });
+    let result = await encode({ text, canvas, unitSize, key });
+    if(!result.success && ["invalid_unit_size"].includes(result.type)) {
+      new Toast({ message: result.message, type: "error" });
+    }
   }
 });
 
@@ -115,10 +131,11 @@ document.addEventListener("keydown", (e) => {
 
 async function handleDecode(e) {
   e.preventDefault();
+  console.log(imageInput.files)
 
   let file = imageInput.files[0];
   let { name, size, type } = file;
-  if (type !== "image/png") throw new Error("Only Images are allowed");
+  if (type !== "image/png") return new Toast({ message: "Invalid File Type", type: "error" });
   document.getElementById("file-count").textContent = `1 File Uploaded`;
   document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
 
@@ -139,6 +156,9 @@ async function handleDecode(e) {
     }
     if (!result.success && result.type !== "requires_key") {
       decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
+    }
+    if(!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {
+      new Toast({ message: result.message, type: "error" });
     }
     if (result.success) {
       let decodedText = result.data;
