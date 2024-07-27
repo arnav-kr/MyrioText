@@ -1,7 +1,7 @@
 import './css/style.css';
 import { getFile, copy, download, share, Toast } from "./js/utils";
 import { encode, decode } from "./js/myrio";
-
+globalThis.Toast = Toast;
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
   element.addEventListener("change", handleProcessingMode);
@@ -48,7 +48,12 @@ encodeForm.addEventListener("submit", async (e) => {
   let key = useEncryption.checked ? document.getElementById("key").value : null;
   // encode text
   let canvas = document.getElementById("render");
-  await encode({ text, canvas, unitSize, key });
+  let result = await encode({ text, canvas, unitSize, key });
+  if (!result.success && ["invalid_unit_size"].includes(result.type)) {
+    document.getElementById("unit-size").setCustomValidity(result.message);
+    encodeForm.reportValidity();
+    new Toast(result.message);
+  }
 });
 
 // handle decode submit
@@ -80,8 +85,11 @@ encodeForm.addEventListener("input", async () => {
     // encode text
     let canvas = document.getElementById("render");
     let result = await encode({ text, canvas, unitSize, key });
-    if(!result.success && ["invalid_unit_size"].includes(result.type)) {
-      new Toast({ message: result.message, type: "error" });
+    console.log(result);
+    if (!result.success && ["invalid_unit_size"].includes(result.type)) {
+      document.getElementById("unit-size").setCustomValidity(result.message);
+      encodeForm.reportValidity();
+      new Toast(result.message);
     }
   }
 });
@@ -135,7 +143,7 @@ async function handleDecode(e) {
 
   let file = imageInput.files[0];
   let { name, size, type } = file;
-  if (type !== "image/png") return new Toast({ message: "Invalid File Type", type: "error" });
+  if (type !== "image/png") return new Toast("Invalid File Type");
   document.getElementById("file-count").textContent = `1 File Uploaded`;
   document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
 
@@ -157,8 +165,8 @@ async function handleDecode(e) {
     if (!result.success && result.type !== "requires_key") {
       decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
     }
-    if(!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {
-      new Toast({ message: result.message, type: "error" });
+    if (!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {
+      new Toast(result.message);
     }
     if (result.success) {
       let decodedText = result.data;

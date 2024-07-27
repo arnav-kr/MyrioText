@@ -1,19 +1,19 @@
 import { encrypt, decrypt } from "./aes";
 import { deflate, inflate } from "pako";
 
-export async function encode({ text, canvas, unitSize = 4, key }) {
-  if (!text) {
-    let ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    return false;
-  };
-  let data = !key ? text : await encrypt(text, key);
+export async function encode({ text, canvas, unitSize = 10, key }) {
   if (typeof unitSize !== "number") {
     return { success: false, type: "invalid_unit_size", message: "Unit size must be a number" };
   }
   if (!Number.isInteger(unitSize) || unitSize <= 0) {
     return { success: false, type: "invalid_unit_size", message: "Unit size must be an positive natural number" };
   }
+  if (!text) {
+    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    return { success: false, type: "requires_text", message: "No text provided" };
+  };
+  let data = !key ? text : await encrypt(text, key);
   // keep first 4 pixels for metadata
   let metadata = new Uint8Array(4);
   // 1: unit size
@@ -56,6 +56,7 @@ export async function encode({ text, canvas, unitSize = 4, key }) {
     }
     if (colorData.length <= c) { break; }
   }
+  return { success: true, message: "Encoded Successfully!" };
 }
 
 export async function decode({ canvas, key }) {
