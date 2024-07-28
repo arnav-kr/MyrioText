@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Myrio Text</title>
 
@@ -30,19 +31,19 @@
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
     <nav
       class="relative rounded-[6px] shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
-      <label
+      <label tabindex="0"
         class="cursor-pointer rounded-[4px] py-2 pl-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pr-3">
         <input type="radio" name="mode" value="encode" class="mode hidden" id="encode-checkbox" checked>
         <span>Encode</span>
       </label>
-      <label
+      <label tabindex="0"
         class="cursor-pointer rounded-[4px] py-2 pr-3 block has-[:checked]:bg-zinc-100 has-[:checked]:ring-1 has-[:checked]:ring-zinc-200 dark:has-[:checked]:ring-zinc-600 dark:has-[:checked]:bg-zinc-700 has-[:checked]:pl-3">
         <input type="radio" name="mode" value="decode" class="mode hidden" id="decode-checkbox">
         <span>Decode</span>
       </label>
     </nav>
     <div class="flex gap-2 items-center justify-center">
-      <button class="floating-button aspect-square h-12 w-12"
+      <button class="floating-button aspect-square h-12 w-12" title="Toggle Theme"
         onclick="document.documentElement.classList.toggle('dark')">
         <!-- sun -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -127,10 +128,37 @@
           <input type="number" id="unit-size" name="unit-size" class="input" value="10" min="1" max="255" step="1"
             spellcheck="false" autocomplete="off" required>
 
+          <!-- color channels -->
+          <label for="color-channels" class="label">Color Channels:</label>
+          <fieldset id="color-channels" class="flex gap-2 mb-2">
+            <label for="red"
+              class="cursor-pointer badge has-[:checked]:bg-red-600 dark:has-[:checked]:bg-red-600 ring-red-500 dark:ring-red-500">
+              <input type="checkbox" id="red" name="red-channel" value="red" class="peer sr-only" />
+              <span class="text-red-500 peer-checked:text-zinc-50">Red</span>
+            </label>
+            <label for="green"
+              class="cursor-pointer badge has-[:checked]:bg-green-600 dark:has-[:checked]:bg-green-600 ring-green-500 dark:ring-green-500">
+              <input type="checkbox" id="green" name="green-channel" value="green" class="peer sr-only" />
+              <span class="text-green-500 peer-checked:text-zinc-50">Green</span>
+            </label>
+            <label for="blue"
+              class="cursor-pointer badge has-[:checked]:bg-blue-600 dark:has-[:checked]:bg-blue-600 ring-blue-500 dark:ring-blue-500">
+              <input type="checkbox" id="blue" name="blue-channel" value="blue" class="peer sr-only" />
+              <span class="text-blue-500 peer-checked:text-zinc-50">Blue</span>
+            </label>
+            <label for="alpha"
+              class="cursor-not-allowed badge has-[:checked]:bg-zinc-200 dark:has-[:checked]:bg-zinc-700 ring-zinc-300 dark:ring-zinc-600">
+              <input type="checkbox" id="alpha" name="alpha-channel" value="alpha" class="peer sr-only" checked
+                disabled />
+              <span class="peer-checked:text-zinc-700 dark:peer-checked:text-zinc-200">Alpha</span>
+            </label>
+          </fieldset>
+
           <div class="flex flex-col ms:flex-row gap-4 py-2 peer">
             <!-- live convert -->
             <label for="live-convert" class="flex items-center cursor-pointer select-none">
-              <div class="relative">
+              <div
+                class="relative focus-within:ring-2 focus-within:ring-offset-2 ring-white ring-offset-black rounded-full">
                 <input type="checkbox" id="live-convert" name="live-convert" class="peer sr-only" checked />
                 <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
                 </div>
@@ -143,7 +171,8 @@
 
             <!-- use encryption -->
             <label for="use-encryption" class="flex items-center cursor-pointer select-none peer/use-encryption">
-              <div class="relative">
+              <div
+                class="relative focus-within:ring-2 focus-within:ring-offset-2 ring-white ring-offset-black rounded-full">
                 <input type="checkbox" id="use-encryption" name="use-encryption"
                   class="use-encryption-checkbox peer sr-only" />
                 <div class="block h-5 rounded-full dark:bg-zinc-800 bg-zinc-300 peer-checked:bg-sky-700 w-8">
@@ -189,7 +218,7 @@
         <form id="decode-form">
           <!-- decoded text -->
           <div class="relative">
-            <textarea id="output-text" name="output-text"
+            <textarea id="output-text" name="output-text" tabindex="-1"
               class="resize input mb-6 focus:ring-1 focus:ring-zinc-300 dark:focus:ring-zinc-700" rows="6"
               placeholder="Decoded text will show up here" readonly></textarea>
             <button id="copy-text-button" type="button"
@@ -210,7 +239,7 @@
           </div>
           <!-- input image -->
           <label for="image-file"
-            class="w-full cursor-pointer select-none p-3 flex items-center gap-3 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-800 hover:bg-zinc-200 hover:bg-opacity-20 dark:hover:bg-zinc-800 dark:hover:bg-opacity-35 transition duration-200 ease-[ease]">
+            class="w-full cursor-pointer select-none p-3 flex items-center gap-3 rounded-lg shadow-sm ring-1 ring-zinc-200 dark:ring-zinc-800 hover:bg-zinc-200 hover:bg-opacity-20 dark:hover:bg-zinc-800 dark:hover:bg-opacity-35 transition duration-200 ease-[ease] focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-white dark:focus-within:ring-white focus-within:ring-offset-black">
             <div
               class="flex items-center justify-center aspect-square h-16 rounded-md bg-zinc-300 dark:bg-zinc-800 bg-opacity-55 dark:bg-opacity-65">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -230,7 +259,7 @@
                   <span class="peer-empty:inline hidden">Drop, Paste, or Click to Upload an Image</span>
                 </span>
             </div>
-            <input type="file" name="image-file" id="image-file" class="hidden" accept="image/png" required>
+            <input type="file" name="image-file" id="image-file" class="sr-only" accept="image/png" required>
           </label>
           <!-- decryption key -->
           <div class="hidden mt-2">
@@ -254,6 +283,13 @@
           clip-rule="evenodd" />
       </svg>
       <span>A default one</span> -->
+  </aside>
+  <aside id="drag-popup"
+    class="fixed p-5 inset-0 top-0 left-0 grid place-items-center bg-zinc-100 dark:bg-zinc-800 hidden">
+    <div
+      class="w-full h-full box-border border-dashed border-4 border-zinc-500 dark:border-zinc-400 grid place-items-center text-lg font-bold">
+      Drop Image Here
+    </div>
   </aside>
   <footer>
     <hr class="my-3 mx-8 bg-transparent border-zinc-200 dark:border-zinc-700">

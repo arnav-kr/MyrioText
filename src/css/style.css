@@ -19,8 +19,11 @@
   .button {
     @apply w-full bg-sky-700 disabled:opacity-70 disabled:cursor-not-allowed [&:not(:disabled)]:hover:bg-sky-600 [&:not(:disabled)]:active:scale-[99%] transition duration-150 ease-[ease] py-2 px-4 rounded-md shadow-sm;
   }
+  .badge {
+    @apply select-none inline-flex items-center gap-2 px-2 py-1 text-sm font-semibold ring-1 rounded-md focus-within:ring-2 align-middle;
+  }
   .toast {
-    @apply flex px-4 py-3 gap-2 text-base shadow-lg ring-1 ring-zinc-300 dark:ring-zinc-400 text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-600 align-middle items-center sm:min-w-72  rounded-md transition  duration-200 ease-[ease] opacity-0 transform translate-y-6;
+    @apply z-50 flex px-4 py-3 gap-2 text-base shadow-lg ring-1 ring-zinc-300 dark:ring-zinc-400 text-zinc-900 dark:text-zinc-50 bg-zinc-50 dark:bg-zinc-600 align-middle items-center sm:min-w-72  rounded-md transition  duration-200 ease-[ease] opacity-0 transform translate-y-6;
   }
   .toast.error {
     @apply ring-red-200 dark:ring-red-400 text-[#e60000] bg-[#fff0f0] dark:bg-[#772626] dark:text-[#fff0f0]

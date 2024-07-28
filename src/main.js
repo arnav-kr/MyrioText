@@ -63,8 +63,22 @@ encodeForm.addEventListener("submit", async (e) => {
 // handle decode submit
 decodeForm.addEventListener("submit", handleDecode);
 
-// decode on drop
+document.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById("drag-popup").classList.remove("hidden");
+});
 
+// decode on drop
+document.addEventListener('drop', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  document.getElementById("drag-popup").classList.add("hidden");
+  if (!e.dataTransfer) return false;
+  imageInput.files = e.dataTransfer.files;
+  openProcessingMode("decode");
+  imageInput.dispatchEvent(new Event("change"));
+});
 
 // decode on paste
 document.addEventListener('paste', function (e) {
@@ -92,6 +106,10 @@ encodeForm.addEventListener("input", async () => {
       document.getElementById("unit-size").setCustomValidity(result.message);
       encodeForm.reportValidity();
       new Toast({ message: result.message, type: "error" });
+    }
+    else {
+      document.getElementById("unit-size").setCustomValidity("");
+      encodeForm.reportValidity();
     }
   }
 });
