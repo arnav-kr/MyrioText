@@ -10,29 +10,33 @@ document.querySelectorAll(".mode").forEach((element) => {
 // copy render
 document.getElementById("copy-button").addEventListener("click", async () => {
   let canvas = document.getElementById("render");
-  let response = await copy(await getFile(canvas));
-  console.log(response);
+  let result = await copy(await getFile(canvas));
+  let type = result.success ? "success" : "error";
+  new Toast({ message: result.message, type });
 });
 
 // download render
 document.getElementById("download-button").addEventListener("click", async (e) => {
   let canvas = document.getElementById("render");
-  let response = download(await getFile(canvas));
-  console.log(response);
+  let result = download(await getFile(canvas));
+  let type = result.success ? "success" : "error";
+  new Toast({ message: result.message, type });
 });
 
 // share render
 document.getElementById("share-button").addEventListener("click", async () => {
   let canvas = document.getElementById("render");
-  let response = await share(await getFile(canvas));
-  console.log(response);
+  let result = await share(await getFile(canvas));
+  let type = result.success ? "success" : "error";
+  new Toast({ message: result.message, type });
 });
 
 // copy decoded text
 document.getElementById("copy-text-button").addEventListener("click", async () => {
   let text = document.getElementById("output-text").value;
   let result = await copy(text);
-  console.log(result);
+  let type = result.success ? "success" : "error";
+  new Toast({ message: result.message, type });
 });
 
 const encodeForm = document.getElementById("encode-form");
@@ -52,7 +56,7 @@ encodeForm.addEventListener("submit", async (e) => {
   if (!result.success && ["invalid_unit_size"].includes(result.type)) {
     document.getElementById("unit-size").setCustomValidity(result.message);
     encodeForm.reportValidity();
-    new Toast(result.message);
+    new Toast({ message: result.message, type: "error" });
   }
 });
 
@@ -66,7 +70,6 @@ decodeForm.addEventListener("submit", handleDecode);
 document.addEventListener('paste', function (e) {
   // Get the data of clipboard
   if (!e.clipboardData) return false;
-  console.log(e.clipboardData.files);
   imageInput.files = e.clipboardData.files;
   openProcessingMode("decode");
   imageInput.dispatchEvent(new Event("change"));
@@ -85,11 +88,10 @@ encodeForm.addEventListener("input", async () => {
     // encode text
     let canvas = document.getElementById("render");
     let result = await encode({ text, canvas, unitSize, key });
-    console.log(result);
     if (!result.success && ["invalid_unit_size"].includes(result.type)) {
       document.getElementById("unit-size").setCustomValidity(result.message);
       encodeForm.reportValidity();
-      new Toast(result.message);
+      new Toast({ message: result.message, type: "error" });
     }
   }
 });
@@ -142,8 +144,9 @@ async function handleDecode(e) {
   console.log(imageInput.files)
 
   let file = imageInput.files[0];
-  let { name, size, type } = file;
-  if (type !== "image/png") return new Toast("Invalid File Type");
+  if (!file) return new Toast({ message: "Pasted item is not an Image", type: "error" });
+  if (file.type !== "image/png") return new Toast({ message: "Invalid File Type", type: "error" });
+  let { name, size } = file;
   document.getElementById("file-count").textContent = `1 File Uploaded`;
   document.getElementById("file-name").textContent = `${name} (${Math.round(size / 1024) < 1 ? (Math.round(size) + "B") : (Math.round(size / 1024) + "KB")})`;
 
@@ -160,17 +163,19 @@ async function handleDecode(e) {
     ctx.drawImage(img, 0, 0);
     let result = await decode({ canvas, key });
     if (!result.success && result.type === "requires_key") {
+      new Toast({ message: result.message, type: "info" });
       return decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: true } }))
     }
-    if (!result.success && result.type !== "requires_key") {
+    if (!result.success && result.type !== "requires_key" && result.type !== "invalid_credentials") {
       decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
     }
     if (!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {
-      new Toast(result.message);
+      new Toast({ message: result.message, type: "error" });
     }
     if (result.success) {
       let decodedText = result.data;
       document.getElementById("output-text").value = decodedText;
+      new Toast({ message: result.message, type: "success" });
     }
   };
 }
