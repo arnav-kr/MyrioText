@@ -108,6 +108,28 @@ export async function getFile(canvas) {
   return new File([result], `${uniqueID()}_myrio.txt.png`, { type: "image/png" });
 }
 
+export function encodeChannels(channels) {
+  // 0 -> red
+  // 1 -> green
+  // 2 -> blue
+  // 3 -> alpha
+  let encodedByte = 0b00000000;
+  encodedByte |= (channels[0] ? 0b11 : 0b00) << 6;
+  encodedByte |= (channels[1] ? 0b11 : 0b00) << 4;
+  encodedByte |= (channels[2] ? 0b11 : 0b00) << 2;
+  encodedByte |= (channels[3] ? 0b11 : 0b00) << 0;
+  return encodedByte;
+}
+export function parseChannels(int) {
+  if (int < 0 || int > 0b11111111) return null;
+  let channels = [];
+  channels[0] = 1 & ((int & (0b11 << 6)) >> 6) === 0b11;
+  channels[1] = 1 & ((int & (0b11 << 4)) >> 4) === 0b11;
+  channels[2] = 1 & ((int & (0b11 << 2)) >> 2) === 0b11;
+  channels[3] = 1 & ((int & (0b11 << 0)) >> 0) === 0b11;
+  return channels;
+}
+
 // Toast
 export class Toast {
   constructor({ message = "", duration = 3000, type = "default" }) {

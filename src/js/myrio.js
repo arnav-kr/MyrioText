@@ -1,7 +1,8 @@
 import { encrypt, decrypt } from "./aes";
 import { deflate, inflate } from "pako";
+import { encodeChannels, parseChannels } from "./utils";
 
-export async function encode({ text, canvas, unitSize = 10, key }) {
+export async function encode({ text, canvas, unitSize = 10, key, colorChannels }) {
   if (typeof unitSize !== "number") {
     return { success: false, type: "invalid_unit_size", message: "Unit size must be a number" };
   }
@@ -23,19 +24,33 @@ export async function encode({ text, canvas, unitSize = 10, key }) {
   // 3: is encrypted
   metadata.set(key ? [255] : [0], 2);
   // 4: type of encoding (only 0 for now)
-  metadata.set([0], 3);
+  metadata.set([encodeChannels(colorChannels)], 3);
 
   let compressed = deflate(data);
 
-  let codePoints = new Uint8Array(metadata.length + compressed.length);
-  codePoints.set(metadata, 0);
-  codePoints.set(compressed, 4);
-
   let colorData = [];
-
-  for (let code of codePoints) {
-    colorData.push(code.toString(16).padStart(8, 0));
+  for (let md of metadata) {
+    colorData.push(md.toString(16).padStart(8, 0));
   }
+  console.log(colorData);
+  let dataPerPixel = colorChannels.reduce((a, b) => a + b, 0);
+  for (let x = 0; x < compressed.length; x += dataPerPixel) {
+    let code = "";
+    for (let i = 0; i < colorChannels.length; i++) {
+      if (colorChannels[i] == 0) {
+        code += "00";
+      }
+      else {
+        code += compressed[x]?.toString(16).padStart(2, 0) ?? "00";
+      }
+    }
+    console.log(code);
+    colorData.push(code);
+  }
+
+  // for (let code of codePoints) {
+  //   colorData.push(code.toString(16).padStart(8, 0));
+  // }
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
@@ -83,8 +98,8 @@ export async function decode({ canvas, key }) {
   }
   let version = metadata[1];
   let isEncrypted = metadata[2] === 255;
-  let type = metadata[3];
-  console.log("Metadata:", { unitSize, version, isEncrypted, type });
+  let colorChannels = parseChannels(metadata[3]);
+  console.log("Metadata:", { unitSize, version, isEncrypted, colorChannels });
 
   if (version === 0) {
     return { success: false, type: "invalid_image", message: "Invalid Image" };

@@ -1,7 +1,10 @@
 import './css/style.css';
-import { getFile, copy, download, share, Toast } from "./js/utils";
+import { getFile, copy, download, share, Toast, parseChannels, encodeChannels } from "./js/utils";
 import { encode, decode } from "./js/myrio";
 globalThis.Toast = Toast;
+globalThis.encodeChannels = encodeChannels;
+globalThis.parseCannels = parseChannels;
+
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
   element.addEventListener("change", handleProcessingMode);
@@ -84,6 +87,7 @@ document.addEventListener('drop', (e) => {
 document.addEventListener('paste', function (e) {
   // Get the data of clipboard
   if (!e.clipboardData) return false;
+  if (!e.clipboardData.files.length) return false;
   imageInput.files = e.clipboardData.files;
   openProcessingMode("decode");
   imageInput.dispatchEvent(new Event("change"));
@@ -98,10 +102,11 @@ encodeForm.addEventListener("input", async () => {
   if (live.checked) {
     let text = document.getElementById("text-input").value;
     let unitSize = parseInt(document.getElementById("unit-size").value);
+    let colorChannels = Array.from(document.querySelectorAll(".color-channel")).map(channel => channel.checked ? 1 : 0);
     let key = useEncryption.checked ? document.getElementById("key").value : null;
     // encode text
     let canvas = document.getElementById("render");
-    let result = await encode({ text, canvas, unitSize, key });
+    let result = await encode({ text, canvas, unitSize, key, colorChannels });
     if (!result.success && ["invalid_unit_size"].includes(result.type)) {
       document.getElementById("unit-size").setCustomValidity(result.message);
       encodeForm.reportValidity();
