@@ -107,7 +107,7 @@ export async function decode({ canvas, key }) {
   }
   let decodedText;
   try {
-    decodedText = inflate(new Uint8Array(result), { to: "string" });
+    decodedText = inflate(new Uint8Array(result));
   }
   catch (e) {
     if (isEncrypted) {

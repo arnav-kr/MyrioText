@@ -25,21 +25,21 @@ export async function encrypt(text, keyText) {
   result.set(iv);
   result.set(encrypted, iv.length);
   // convert to base64
-  return btoa(String.fromCharCode.apply(null, result));
+  return result;
 }
 
 /**
  * decrypts an encrypted text with a password
- * @param {string} text text to be decrypted
+ * @param {Uint8Array} text text to be decrypted
  * @param {string} keyText password
  * @returns {promise<string>} decrypted text
  * @throws {Error} if decryption fails
  */
-export async function decrypt(text, keyText) {
+export async function decrypt(data, keyText) {
   // first 16 bytes is iv
-  let iv = new Uint8Array(atob(text).slice(0, 16).split("").map(c => c.charCodeAt(0)));
+  let iv = data.slice(0, 16);
   // rest is data
-  let data = new Uint8Array(atob(text).slice(16).split("").map(c => c.charCodeAt(0)));
+  data = data.slice(16);
   // convert plain text key to bytes
   let keyBytes = await window.crypto.subtle.digest("SHA-256", new TextEncoder("utf-8").encode(keyText));
   // prepare key
