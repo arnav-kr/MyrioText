@@ -128,7 +128,8 @@
           <input type="number" id="unit-size" name="unit-size" class="input" value="10" min="1" max="255" step="1"
             spellcheck="false" autocomplete="off" required>
 
-          <!-- color channels -->
+          <!-- disable color channels, they are not reliable :( -->
+          <!-- color channels
           <label for="color-channels" class="label">Color Channels:</label>
           <fieldset id="color-channels" class="flex gap-2 mb-2">
             <label for="red"
@@ -149,10 +150,10 @@
             <label for="alpha"
               class="cursor-not-allowed badge has-[:checked]:bg-zinc-200 dark:has-[:checked]:bg-zinc-700 ring-zinc-300 dark:ring-zinc-600">
               <input type="checkbox" id="alpha" name="alpha-channel" value="alpha" class="color-channel peer sr-only" checked
-                disabled />
+                 />
               <span class="peer-checked:text-zinc-700 dark:peer-checked:text-zinc-200">Alpha</span>
             </label>
-          </fieldset>
+          </fieldset> -->
 
           <div class="flex flex-col ms:flex-row gap-4 py-2 peer">
             <!-- live convert -->

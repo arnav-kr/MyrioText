@@ -102,7 +102,9 @@ encodeForm.addEventListener("input", async () => {
   if (live.checked) {
     let text = document.getElementById("text-input").value;
     let unitSize = parseInt(document.getElementById("unit-size").value);
-    let colorChannels = Array.from(document.querySelectorAll(".color-channel")).map(channel => channel.checked ? 1 : 0);
+    // let colorChannels = Array.from(document.querySelectorAll(".color-channel")).map(channel => channel.checked ? 1 : 0);
+    // disable multi channel support, stick to alpha channel
+    let colorChannels = [0, 0, 0, 1];
     let key = useEncryption.checked ? document.getElementById("key").value : null;
     // encode text
     let canvas = document.getElementById("render");
@@ -164,7 +166,6 @@ document.addEventListener("keydown", (e) => {
 
 async function handleDecode(e) {
   e.preventDefault();
-  console.log(imageInput.files)
 
   let file = imageInput.files[0];
   if (!file) return new Toast({ message: "Pasted item is not an Image", type: "error" });

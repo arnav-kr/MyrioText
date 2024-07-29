@@ -1,8 +1,7 @@
 import { encrypt, decrypt } from "./aes";
 import { deflate, inflate } from "pako";
-import { encodeChannels, parseChannels } from "./utils";
 
-export async function encode({ text, canvas, unitSize = 10, key, colorChannels }) {
+export async function encode({ text, canvas, unitSize = 10, key }) {
   if (typeof unitSize !== "number") {
     return { success: false, type: "invalid_unit_size", message: "Unit size must be a number" };
   }
@@ -23,34 +22,18 @@ export async function encode({ text, canvas, unitSize = 10, key, colorChannels }
   metadata.set([1], 1);
   // 3: is encrypted
   metadata.set(key ? [255] : [0], 2);
-  // 4: type of encoding (only 0 for now)
-  metadata.set([encodeChannels(colorChannels)], 3);
 
   let compressed = deflate(data);
 
-  let colorData = [];
-  for (let md of metadata) {
-    colorData.push(md.toString(16).padStart(8, 0));
-  }
-  console.log(colorData);
-  let dataPerPixel = colorChannels.reduce((a, b) => a + b, 0);
-  for (let x = 0; x < compressed.length; x += dataPerPixel) {
-    let code = "";
-    for (let i = 0; i < colorChannels.length; i++) {
-      if (colorChannels[i] == 0) {
-        code += "00";
-      }
-      else {
-        code += compressed[x]?.toString(16).padStart(2, 0) ?? "00";
-      }
-    }
-    console.log(code);
-    colorData.push(code);
-  }
+  let codePoints = new Uint8Array(metadata.length + compressed.length);
+  codePoints.set(metadata, 0);
+  codePoints.set(compressed, 3);
 
-  // for (let code of codePoints) {
-  //   colorData.push(code.toString(16).padStart(8, 0));
-  // }
+  let colorData = [];
+
+  for (let code of codePoints) {
+    colorData.push(code.toString(16).padStart(8, 0));
+  }
   let size = Math.ceil(Math.sqrt(colorData.length)) * unitSize;
 
   if (!canvas) { throw new Error("Canvas is required to draw") }
@@ -80,7 +63,7 @@ export async function decode({ canvas, key }) {
     willReadFrequently: true
   });
 
-  let metadata = new Array(4);
+  let metadata = new Array(3);
   try {
     metadata[0] = ctx.getImageData(0, 0, 1, 1).data[3];
     if (metadata[0] <= 0 || !Number.isInteger(metadata[0])) {
@@ -92,14 +75,13 @@ export async function decode({ canvas, key }) {
     return { success: false, type: "invalid_image", message: "Invalid Image" };
   }
   let unitSize = metadata[0];
-  for (let i = 1; i < 4; i++) {
+  for (let i = 1; i < 3; i++) {
     let imageData = ctx.getImageData(i * unitSize, 0, 1, 1);
     metadata[i] = imageData.data.filter(c => c !== 0)[0] ?? 0;
   }
   let version = metadata[1];
   let isEncrypted = metadata[2] === 255;
-  let colorChannels = parseChannels(metadata[3]);
-  console.log("Metadata:", { unitSize, version, isEncrypted, colorChannels });
+  console.log("Metadata:", { unitSize, version, isEncrypted });
 
   if (version === 0) {
     return { success: false, type: "invalid_image", message: "Invalid Image" };
@@ -116,7 +98,7 @@ export async function decode({ canvas, key }) {
   let result = [];
   for (var y = 0; y < canvas.height; y += unitSize) {
     for (var x = 0; x < canvas.width; x += unitSize) {
-      if (x < 4 * unitSize && y == 0) continue;
+      if (x < 3 * unitSize && y == 0) continue;
       var imageData = ctx.getImageData(x, y, 1, 1);
       result.push(
         imageData.data.filter(c => c !== 0)[0] ?? 0
