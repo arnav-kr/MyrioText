@@ -1,6 +1,6 @@
 {
-  "theme_color": "#212121",
-  "background_color": "#ffffff",
+  "theme_color": "#0369A1",
+  "background_color": "#171717",
   "display": "standalone",
   "id": "/",
   "scope": "/",
@@ -20,9 +20,27 @@
   "icons": [
     {
       "src": "/assets/logo.png",
-      "sizes": "1024x404",
+      "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/logo_maskable.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/logo_maskable.svg",
+      "sizes": "1024x1024",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }

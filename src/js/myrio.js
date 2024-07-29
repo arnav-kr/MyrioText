@@ -107,7 +107,12 @@ export async function decode({ canvas, key }) {
   }
   let decodedText;
   try {
-    decodedText = inflate(new Uint8Array(result));
+    if (isEncrypted) {
+      decodedText = inflate(new Uint8Array(result));
+    }
+    else {
+      decodedText = inflate(new Uint8Array(result), { to: "string" });
+    }
   }
   catch (e) {
     if (isEncrypted) {
@@ -116,7 +121,7 @@ export async function decode({ canvas, key }) {
       return { success: false, type: "invalid_image", message: "Invalid Image" };
     }
   }
-  if (key) {
+  if (key && isEncrypted) {
     try {
       decodedText = await decrypt(decodedText, key);
     }

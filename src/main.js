@@ -5,6 +5,11 @@ globalThis.Toast = Toast;
 globalThis.encodeChannels = encodeChannels;
 globalThis.parseCannels = parseChannels;
 
+// theme toggle
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  document.documentElement.classList.toggle('dark');
+});
+
 // processing modes
 document.querySelectorAll(".mode").forEach((element) => {
   element.addEventListener("change", handleProcessingMode);
@@ -190,7 +195,7 @@ async function handleDecode(e) {
       new Toast({ message: result.message, type: "info" });
       return decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: true } }))
     }
-    if (!result.success && result.type !== "requires_key" && result.type !== "invalid_credentials") {
+    if (!result.success && result.type !== "requires_key") {
       decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
     }
     if (!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {

@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 
-<head>
+<head prefix="og: https://ogp.me/ns# 
+https://ogp.me/ns/website#">
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Myrio Text</title>
+
+  <!-- CSP -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' data: blob:; object-src 'none'; frame-src 'none'; manifest-src 'self'">
 
   <!-- icons -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -21,7 +26,93 @@
   <meta name="keywords"
     content="myrio text, text to image, image to text, encode text, decode text, secret messages, arnav, arnav-kr, arnav-kr.github.io, myrio.now.sh, myrio.vercel.app, encrypt decrypt, secret">
   <meta name="robots" content="index, follow">
-  <!-- <link rel="manifest" href="manifest.webmanifest"> --><!-- Uncomment for PWA Support -->
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://myrio.now.sh/">
+  <meta property="og:title" content="Myrio Text">
+  <meta property="og:description"
+    content="Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret messages with your friends.">
+  <meta property="og:image" content="https://myrio.now.sh/assets/og_banner.png">
+  <meta property="og:image:secure_url" content="https://myrio.now.sh/assets/og_banner.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Myrio Text" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://myrio.now.sh/">
+  <meta property="twitter:title" content="Myrio Text">
+  <meta property="twitter:description"
+    content="Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret messages with your friends.">
+  <meta property="twitter:image" content="https://myrio.now.sh/assets/og_image.png">
+
+  <!-- Structured JSON Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "url": "https://myrio.now.sh/",
+      "name": "Myrio Text",
+      "alternateName": "Myrio Text",
+      "description": "Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret messages with your friends.",
+      "keywords": "myrio text, text to image, image to text, encode text, decode text, secret messages, arnav, arnav-kr, arnav-kr.github.io, myrio.now.sh, myrio.vercel.app, encrypt decrypt, secret",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://myrio.now.sh/assets/og_banner.png",
+        "representativeOfPage": true,
+        "embeddedTextCaption": "Myrio Text"
+      },
+      "applicationCategory": [
+        "UtilityApplication",
+        "BrowserApplication"
+      ],
+      "sameAs": [
+        "https://myrio.now.sh/",
+        "https://myrio.vercel.app/"
+      ],
+      "author": {
+        "@type": "Person",
+        "name": "Arnav Kumar",
+        "alternateName": "Arnav",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://avatars.githubusercontent.com/u/72879799?v=4",
+          "width": 371,
+          "height": 371
+        },
+        "url": "https://github.com/arnav-kr/",
+        "sameAs": [
+          "https://github.com/arnav-kr",
+          "https://www.linkedin.com/in/arnav-kr/",
+          "https://twitter.com/arnavkr_",
+          "https://x.com/arnav-kr/",
+          "https://www.reddit.com/u/arnav-kr/",
+          "https://www.instagram.com/its.arnavkr/",
+          "https://www.facebook.com/its.arnavkr/",
+          "https://www.youtube.com/@ArnavOfficial"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Myrio Text",
+        "url": "https://myrio.now.sh/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://myrio.now.sh/assets/logo.png",
+          "width": 1024,
+          "height": 1024
+        },
+        "sameAs": [
+          "https://myrio.now.sh/",
+          "https://myrio.vercel.app/"
+        ]
+      }
+    }
+  </script>
+  <!-- web manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 
 <body
@@ -43,8 +134,7 @@
       </label>
     </nav>
     <div class="flex gap-2 items-center justify-center">
-      <button class="floating-button aspect-square h-12 w-12" title="Toggle Theme"
-        onclick="document.documentElement.classList.toggle('dark')">
+      <button class="floating-button aspect-square h-12 w-12" title="Toggle Theme" id="theme-toggle">
         <!-- sun -->
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-6 stroke-zic-900 dark:stroke-zinc-50 hidden dark:block">
