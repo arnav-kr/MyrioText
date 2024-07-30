@@ -67,12 +67,12 @@ export async function decode({ canvas, key }) {
   try {
     metadata[0] = ctx.getImageData(0, 0, 1, 1).data[3];
     if (metadata[0] <= 0 || !Number.isInteger(metadata[0])) {
-      return { success: false, type: "invalid_image", message: "Invalid Image" };
+      return { success: false, type: "invalid_image", message: "Invalid Image", metadata };
     }
   }
   catch (e) {
     console.log(e)
-    return { success: false, type: "invalid_image", message: "Invalid Image" };
+    return { success: false, type: "invalid_image", message: "Invalid Image", metadata };
   }
   let unitSize = metadata[0];
   for (let i = 1; i < 3; i++) {
@@ -81,18 +81,19 @@ export async function decode({ canvas, key }) {
   }
   let version = metadata[1];
   let isEncrypted = metadata[2] === 255;
+  metadata = { unitSize, version, isEncrypted }
   console.log("Metadata:", { unitSize, version, isEncrypted });
 
   if (version === 0) {
-    return { success: false, type: "invalid_image", message: "Invalid Image" };
+    return { success: false, type: "invalid_image", message: "Invalid Image", metadata};
   }
 
   if (canvas.width !== canvas.height) {
-    return { success: false, type: "invalid_image", message: "Invalid Image" };
+    return { success: false, type: "invalid_image", message: "Invalid Image", metadata };
   }
 
   if (isEncrypted && !key) {
-    return { success: false, type: "requires_key", message: "This image requies a key for decryption" };
+    return { success: false, type: "requires_key", message: "This image requies a key for decryption", metadata };
   }
 
   let result = [];
@@ -116,9 +117,9 @@ export async function decode({ canvas, key }) {
   }
   catch (e) {
     if (isEncrypted) {
-      return { success: false, type: "invalid_credentials", message: "Invalid Credentials" };
+      return { success: false, type: "invalid_credentials", message: "Invalid Credentials", metadata };
     } else {
-      return { success: false, type: "invalid_image", message: "Invalid Image" };
+      return { success: false, type: "invalid_image", message: "Invalid Image", metadata };
     }
   }
   if (key && isEncrypted) {
@@ -126,8 +127,8 @@ export async function decode({ canvas, key }) {
       decodedText = await decrypt(decodedText, key);
     }
     catch (e) {
-      return { success: false, type: "invalid_credentials", message: "Invalid Credentials" };
+      return { success: false, type: "invalid_credentials", message: "Invalid Credentials", metadata };
     }
   }
-  return { success: true, data: decodedText, message: "Decoded Successfully!" }
+  return { success: true, data: decodedText, message: "Decoded Successfully!", metadata }
 }

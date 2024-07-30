@@ -2,6 +2,11 @@
   "theme_color": "#0369A1",
   "background_color": "#171717",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "browser"
+  ],
   "id": "/",
   "scope": "/",
   "start_url": "/",
@@ -42,5 +47,81 @@
       "type": "image/svg+xml",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/decode",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "name",
+      "files": [
+        {
+          "name": "image",
+          "accept": [
+            "image/png"
+          ]
+        }
+      ]
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/",
+      "name": "Myrio Text Decode",
+      "accept": {
+        "image/png": [
+          ".txt.png"
+        ]
+      },
+      "icons": [
+        {
+          "src": "/assets/logo.png",
+          "sizes": "1024x1024",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/logo.svg",
+          "sizes": "1024x1024",
+          "type": "image/svg+xml",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/logo_maskable.png",
+          "sizes": "1024x1024",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+        {
+          "src": "/assets/logo_maskable.svg",
+          "sizes": "1024x1024",
+          "type": "image/svg+xml",
+          "purpose": "maskable"
+        }
+      ]
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+myrio",
+      "url": "/?image=%s"
+    }
+  ],
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": [
+      "navigate-existing", "auto"
+    ]
+  },
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://myrio.now.sh/manifest.webmanifest"
+    }
+  ],
+  "scope_extensions": [],
+  "edge_side_panel": {
+    "preferred_width": 384
+  }
 }

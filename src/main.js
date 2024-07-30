@@ -191,14 +191,12 @@ async function handleDecode(e) {
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
     let result = await decode({ canvas, key });
-    if (!result.success && result.type === "requires_key") {
+    decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: result.metadata.isEncrypted } }))
+    
+    if (!result.success && result.metadata.isEncrypted && result.type === "requires_key") {
       new Toast({ message: result.message, type: "info" });
-      return decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: true } }))
     }
-    if (!result.success && result.type !== "requires_key") {
-      decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: false } }))
-    }
-    if (!result.success && ["invalid_image", "invalid_credentials", "requires_key"].includes(result.type)) {
+    if (!result.success && ["invalid_image", "invalid_credentials"].includes(result.type)) {
       new Toast({ message: result.message, type: "error" });
     }
     if (result.success) {

@@ -8,17 +8,9 @@ self.addEventListener('message', function (event) {
   }
 });
 
-// TODO: Update the cacheName Everytime you want to update your cache
-const cacheName = "v0.0.0";
-const cacheKeepList = [cacheName] // Add Other names of cache that you don't want to delete
+const cacheName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-// custom base64
-const catob = (data) => atob(data.replace(/\_/g, '+'));
-const cbtoa = (data) => btoa(data).replace(/\+/g, '_');
-
-// TODO: Add the default response URL
-// When the User is offline and the requested resource is not in the cache then this response will be returned. This needs to be in the cache
-defaultResponseURL = "/offline.html";
+defaultResponseURL = "/";
 
 
 // TODO: Add your resource's URLs that you want to precache
@@ -28,10 +20,8 @@ const preCacheURLs = [
 ];
 
 
-// Service Worker "install" event listener
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    // Put the preCache resources in cache on install
     caches.open(cacheName).then((cache) => {
       return cache.addAll(preCacheURLs);
     })
@@ -39,14 +29,11 @@ self.addEventListener("install", (event) => {
 });
 
 
-// Service Worker "activate" event listener
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    // Iterate over the Keys of Cache
     caches.keys().then((keyList) => {
-      // Remove the Cache if the name is is not in the cacheKeepList
       return Promise.all(keyList.map((key) => {
-        if (cacheKeepList.indexOf(key) === -1) {
+        if (key !== cacheName) {
           return caches.delete(key);
         }
       }));
@@ -54,20 +41,36 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-
 // Service Worker "fetch" event listener
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((resp) => {
-      return resp || fetch(event.request).then((response) => {
-        let responseClone = response.clone();
-        caches.open(cacheName).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
-        return response;
-      }).catch(() => {
-        return caches.match(defaultResponseURL);
+  const url = new URL(event.request.url);
+  if (event.request.method === 'POST' &&
+    url.pathname === '/decode') {
+    event.respondWith((async () => {
+      const formData = await event.request.formData();
+      if (formData.has('image')) {
+        const file = formData.get('image');
+        let data = URL.createObjectURL(file);
+        return Response.redirect(`/?image=${encodeURIComponent(data)}`, 303);
+      }
+      else {
+        return Response.redirect(`/?image=invalid`, 303);
+      }
+    })());
+  }
+  else {
+    event.respondWith(
+      caches.match(event.request).then((resp) => {
+        return resp || fetch(event.request).then((response) => {
+          let responseClone = response.clone();
+          caches.open(cacheName).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+          return response;
+        }).catch(() => {
+          return caches.match(defaultResponseURL);
+        })
       })
-    })
-  );
+    );
+  }
 });
