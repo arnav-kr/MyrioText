@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import tailwindcss from 'tailwindcss';
+import SWUpdate from './src/plugins/sw-update';
 import { readFileSync } from 'fs';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -28,7 +29,7 @@ if (mode == "development") {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(), SWUpdate("sw.js", "dist")],
   ...serverOptions,
   // manifest: true, // uncomment for PWA support
 })

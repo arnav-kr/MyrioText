@@ -35,17 +35,19 @@ if (urlData.image === "invalid") {
   new Toast({ message: "Invalid Image", type: "error" });
 }
 if (urlData.image !== null && urlData.image !== "invalid") {
-  try {
-    let url = decodeURIComponent(urlData.image);
-    let file = await fetch(url).then(response => response.blob());
-    let imageInput = document.getElementById("image-file");
-    let data = new DataTransfer();
-    data.items.add(new File([file], "image.png", { type: "image/png" }));
-    imageInput.files = data.files;
-    imageInput.dispatchEvent(new Event("change"));
-  } catch (error) {
-    new Toast({ message: "Invalid Image", type: "error" });
-  }
+  (async () => {
+    try {
+      let url = decodeURIComponent(urlData.image);
+      let file = await fetch(url).then(response => response.blob());
+      let imageInput = document.getElementById("image-file");
+      let data = new DataTransfer();
+      data.items.add(new File([file], "image.png", { type: "image/png" }));
+      imageInput.files = data.files;
+      imageInput.dispatchEvent(new Event("change"));
+    } catch (error) {
+      new Toast({ message: "Invalid Image", type: "error" });
+    }
+  })();
 }
 
 
@@ -95,7 +97,6 @@ const encodeForm = document.getElementById("encode-form");
 const decodeForm = document.getElementById("decode-form");
 const useEncryption = document.getElementById("use-encryption");
 const imageInput = document.getElementById("image-file");
-const installButton = document.getElementById("install-button");
 
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
@@ -269,20 +270,27 @@ function openProcessingMode(mode) {
   radio.dispatchEvent(new Event("change"));
   return true;
 }
+let installButton = document.getElementById("install-button");
 
 // PWAManager
 let PWAManagerInstance = new PWAManager({
   serviceWorkerPath: './sw.js',
   beforeInstallPrompt: () => {
-    console.log("beforeinstallprompt")
     installButton.classList.toggle("hidden", false);
   },
   appInstalled: () => {
     installButton.classList.toggle("hidden", true);
   },
+  updateAvailable: () => {
+    new Toast({ message: "An Update is Available.\nReloading to Apply Updates", type: "info" });
+    setTimeout(() => {
+      window.location.reload();
+    }, 3000);
+  },
   controllerChange: () => { },
-  installButton: installButton,
-  updateButton: null,
 });
-
 PWAManagerInstance.init();
+
+installButton.addEventListener("click", () => {
+  PWAManagerInstance.showInstallPrompt();
+});

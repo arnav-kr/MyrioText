@@ -10,7 +10,7 @@ self.addEventListener('message', function (event) {
 
 const cacheName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-defaultResponseURL = "/";
+defaultResponseURL = "./";
 
 
 // TODO: Add your resource's URLs that you want to precache
@@ -44,7 +44,10 @@ self.addEventListener("activate", (event) => {
 // Service Worker "fetch" event listener
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if(!["http:", "https:", "ws:", "wss:"].includes(url.protocol)) return;
+  if (
+    event.request.url.startsWith('chrome-extension') ||
+    event.request.url.includes('extension:')
+  ) return;
   if (event.request.method === 'POST' &&
     url.pathname === '/decode') {
     event.respondWith((async () => {
@@ -54,6 +57,7 @@ self.addEventListener("fetch", (event) => {
         let data = URL.createObjectURL(file);
         return Response.redirect(`/?image=${encodeURIComponent(data)}`, 303);
       }
+      
       else {
         return Response.redirect(`/?image=invalid`, 303);
       }

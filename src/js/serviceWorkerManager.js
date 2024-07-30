@@ -32,10 +32,9 @@ export default class ServiceWorkerManager {
             switch (this.newSw.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
-                  let updateEvent = new CustomEvent('updatefound', { currentWorker: this.sw, newWorker: this.newSw });
+                  let updateEvent = new CustomEvent('updatefound', { detail: { currentWorker: this.sw, newWorker: this.newSw } });
                   this.newSw.postMessage({ action: "skipWaiting" });
                   window.dispatchEvent(updateEvent);
-                  console.log('%c[ServiceWorker] %cNew Update Available!', "font-weight:bold;color:purple;", "", "color:blue;font-weight:bold;font-style:italic;");
                 }
                 break;
             }
