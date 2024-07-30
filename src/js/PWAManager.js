@@ -54,7 +54,7 @@ export class PWAManager {
     this.controllerChange = controllerChange;
 
     if (!('serviceWorker' in navigator)) {
-      throw new Error('ServiceWorker is not supported in this browser');
+      console.error('ServiceWorker is not supported in this browser');
     }
   }
 
@@ -62,30 +62,28 @@ export class PWAManager {
     if (('serviceWorker' in navigator)) {
       this.swManager = new ServiceWorkerManager(this.serviceWorkerPath);
       this.swManager.init();
-      window.addEventListener("load", () => {
-        window.addEventListener('beforeInstallPrompt', (e) => {
-          e.preventDefault();
-          this.deferredPrompt = e;
-          this.beforeInstallPrompt(e);
-          console.log("Prompted user to install");
-        });
+      window.addEventListener('beforeInstallPrompt', (e) => {
+        e.preventDefault();
+        this.deferredPrompt = e;
+        this.beforeInstallPrompt(e);
+        console.log("Prompted user to install");
+      });
 
-        this.installButton && this.installButton.addEventListener('click', async () => {
-          this.deferredPrompt.prompt();
-          const { outcome } = await this.deferredPrompt.userChoice;
-          console.log(`User response to the install prompt: ${outcome}`);
-          this.deferredPrompt = null;
-        });
+      this.installButton && this.installButton.addEventListener('click', async () => {
+        this.deferredPrompt.prompt();
+        const { outcome } = await this.deferredPrompt.userChoice;
+        console.log(`User response to the install prompt: ${outcome}`);
+        this.deferredPrompt = null;
+      });
 
-        this.updateButton && updateButton.addEventListener("click", () => {
-          window.location.reload();
-        });
+      this.updateButton && updateButton.addEventListener("click", () => {
+        window.location.reload();
+      });
 
-        window.addEventListener('appInstalled', (e) => {
-          this.appInstalled(e);
-          this.deferredPrompt = null;
-          console.log('PWA was installed');
-        });
+      window.addEventListener('appInstalled', (e) => {
+        this.appInstalled(e);
+        this.deferredPrompt = null;
+        console.log('PWA was installed');
       });
 
       navigator.serviceWorker.addEventListener('controllerChange', (e) => {
@@ -94,13 +92,12 @@ export class PWAManager {
         this.refreshing = true;
       });
 
-      // Just shout in console when the new update is available no use of the event here btw
       window.addEventListener("updatefound", () => {
         console.log("New Update Available!");
       });
     }
     else {
-      throw new Error('ServiceWorker is not supported in this browser');
+      console.error('ServiceWorker is not supported in this browser');
     }
   }
 }

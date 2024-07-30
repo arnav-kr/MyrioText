@@ -1,9 +1,53 @@
 import './css/style.css';
 import { getFile, copy, download, share, Toast, parseChannels, encodeChannels } from "./js/utils";
 import { encode, decode } from "./js/myrio";
+import { PWAManager } from './js/PWAManager';
 globalThis.Toast = Toast;
 globalThis.encodeChannels = encodeChannels;
 globalThis.parseCannels = parseChannels;
+
+// get url queries, and accordingly set, live mode, use encryption, processing mode, data uri of image
+let urlParams = new URLSearchParams(window.location.search);
+let urlData = {
+  image: urlParams.get("image"),
+  mode: urlParams.get("mode"),
+  live: urlParams.get("live"),
+  encryption: urlParams.get("encryption"),
+}
+
+// set processing mode
+if (urlData.mode !== null) {
+  openProcessingMode(urlData.mode === 0 ? "encode" : "decode");
+}
+
+// set live mode
+if (urlData.live !== null) {
+  document.getElementById("live-convert").checked = urlData.live === 1 ? true : false;
+}
+
+// set use encryption
+if (urlData.encryption !== null) {
+  document.getElementById("use-encryption").checked = urlData.encryption === 1 ? true : false;
+}
+
+// load image from data uri if valid
+if (urlData.image === "invalid") {
+  new Toast({ message: "Invalid Image", type: "error" });
+}
+if (urlData.image !== null && urlData.image !== "invalid") {
+  try {
+    let url = decodeURIComponent(urlData.image);
+    let file = await fetch(url).then(response => response.blob());
+    let imageInput = document.getElementById("image-file");
+    let data = new DataTransfer();
+    data.items.add(new File([file], "image.png", { type: "image/png" }));
+    imageInput.files = data.files;
+    imageInput.dispatchEvent(new Event("change"));
+  } catch (error) {
+    new Toast({ message: "Invalid Image", type: "error" });
+  }
+}
+
 
 // theme toggle
 document.getElementById("theme-toggle").addEventListener("click", () => {
@@ -51,6 +95,7 @@ const encodeForm = document.getElementById("encode-form");
 const decodeForm = document.getElementById("decode-form");
 const useEncryption = document.getElementById("use-encryption");
 const imageInput = document.getElementById("image-file");
+const installButton = document.getElementById("install-button");
 
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
@@ -192,7 +237,7 @@ async function handleDecode(e) {
     ctx.drawImage(img, 0, 0);
     let result = await decode({ canvas, key });
     decodeForm.dispatchEvent(new CustomEvent("decryption-key", { detail: { isRequired: result.metadata.isEncrypted } }))
-    
+
     if (!result.success && result.metadata.isEncrypted && result.type === "requires_key") {
       new Toast({ message: result.message, type: "info" });
     }
@@ -225,16 +270,19 @@ function openProcessingMode(mode) {
   return true;
 }
 
-// TODO: Uncomment the following lines to enable PWA Support
-// // PWAManager
-// import { PWAManager } from './js/PWAManager';
-// let PWAManagerInstance = new PWAManager({
-//   serviceWorkerPath: './sw.js',
-//   beforeInstallPrompt: () => { },
-//   appInstalled: () => { },
-//   controllerChange: () => { },
-//   installButton: null,
-//   updateButton: null,
-// });
-//
-// PWAManagerInstance.init();
+// PWAManager
+let PWAManagerInstance = new PWAManager({
+  serviceWorkerPath: './sw.js',
+  beforeInstallPrompt: () => {
+    console.log("beforeinstallprompt")
+    installButton.classList.toggle("hidden", false);
+  },
+  appInstalled: () => {
+    installButton.classList.toggle("hidden", true);
+  },
+  controllerChange: () => { },
+  installButton: installButton,
+  updateButton: null,
+});
+
+PWAManagerInstance.init();

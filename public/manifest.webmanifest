@@ -31,7 +31,7 @@
     },
     {
       "src": "/assets/logo.svg",
-      "sizes": "1024x1024",
+      "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
     },
@@ -43,9 +43,132 @@
     },
     {
       "src": "/assets/logo_maskable.svg",
-      "sizes": "1024x1024",
+      "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshots/screenshot-dark-wide-1.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Encrypting Data - Dark Theme",
+      "label": "Encrypting Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-wide-2.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Decrypting Data - Dark Theme",
+      "label": "Decrypting Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-light-wide-1.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Encrypting Data - Light Theme",
+      "label": "Encrypting Data - Light Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-light-wide-2.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Decrypting Data - Light Theme",
+      "label": "Decrypting Data - Light Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-wide-3.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Encoding Data - Dark Theme",
+      "label": "Encoding Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-wide-4.png",
+      "sizes": "1620x945",
+      "type": "image/png",
+      "form_factor": "wide",
+      "description": "Decoding Data - Dark Theme",
+      "label": "Decoding Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-narrow-1.png",
+      "sizes": "638x1230",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "description": "Encrypting Data - Dark Theme",
+      "label": "Encrypting Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-narrow-2.png",
+      "sizes": "638x1230",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "description": "Decrypting Data - Dark Theme",
+      "label": "Decrypting Data - Dark Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-light-narrow-1.png",
+      "sizes": "638x1230",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "description": "Encrypting Data - Light Theme",
+      "label": "Encrypting Data - Light Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-light-narrow-2.png",
+      "sizes": "638x1230",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "description": "Decrypting Data - Light Theme",
+      "label": "Decrypting Data - Light Theme"
+    },
+    {
+      "src": "/assets/screenshots/screenshot-dark-narrow-4.png",
+      "sizes": "638x1230",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "description": "Decoding Data - Dark Theme",
+      "label": "Decoding Data - Dark Theme"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Encode Text",
+      "url": "/",
+      "description": "Encode your text",
+      "icons": [
+        {
+          "src": "/assets/logo.png",
+          "sizes": "1024x1024",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/logo.svg",
+          "sizes": "512x512",
+          "type": "image/svg+xml",
+          "purpose": "any"
+        },
+        {
+          "src": "/assets/logo_maskable.png",
+          "sizes": "1024x1024",
+          "type": "image/png",
+          "purpose": "maskable"
+        },
+        {
+          "src": "/assets/logo_maskable.svg",
+          "sizes": "512x512",
+          "type": "image/svg+xml",
+          "purpose": "maskable"
+        }
+      ]
     }
   ],
   "share_target": {
@@ -82,7 +205,7 @@
         },
         {
           "src": "/assets/logo.svg",
-          "sizes": "1024x1024",
+          "sizes": "512x512",
           "type": "image/svg+xml",
           "purpose": "any"
         },
@@ -94,7 +217,7 @@
         },
         {
           "src": "/assets/logo_maskable.svg",
-          "sizes": "1024x1024",
+          "sizes": "512x512",
           "type": "image/svg+xml",
           "purpose": "maskable"
         }
@@ -110,7 +233,8 @@
   "handle_links": "preferred",
   "launch_handler": {
     "client_mode": [
-      "navigate-existing", "auto"
+      "navigate-existing",
+      "auto"
     ]
   },
   "prefer_related_applications": false,

@@ -44,6 +44,7 @@ self.addEventListener("activate", (event) => {
 // Service Worker "fetch" event listener
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
+  if(!["http:", "https:", "ws:", "wss:"].includes(url.protocol)) return;
   if (event.request.method === 'POST' &&
     url.pathname === '/decode') {
     event.respondWith((async () => {
