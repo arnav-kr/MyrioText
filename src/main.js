@@ -50,6 +50,21 @@ if (urlData.image !== null && urlData.image !== "invalid") {
   })();
 }
 
+// file_handle
+if ('launchQueue' in window) {
+  launchQueue.setConsumer(async launchParams => {
+    if (!launchParams.files.length) { return; }
+
+    const fileHandle = launchParams.files[0];
+    if (fileHandle.kind == "file" || fileHandle.endsWith(".png")) {
+      let file = await fileHandle.getFile();
+      let dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      let imageInput = document.getElementById("image-file");
+      imageInput.files = dataTransfer.files;
+    }
+  });
+}
 
 // theme toggle
 document.getElementById("theme-toggle").addEventListener("click", () => {

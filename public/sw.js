@@ -54,10 +54,20 @@ self.addEventListener("fetch", (event) => {
       const formData = await event.request.formData();
       if (formData.has('image')) {
         const file = formData.get('image');
-        let data = URL.createObjectURL(file);
-        return Response.redirect(`/?image=${encodeURIComponent(data)}`, 303);
+        // use file reader api to read to data url and then pass on the data url
+        let fileReader = new FileReader();
+        fileReader.addEventListener('load',  () => {
+          let data = fileReader.result;
+          return Response.redirect(`/?image=${encodeURIComponent(data)}`, 303);
+        });
+        if(file) {
+          fileReader.readAsDataURL(file);
+        }
+        else {
+          return Response.redirect(`/?image=invalid`, 303);
+        }
       }
-      
+
       else {
         return Response.redirect(`/?image=invalid`, 303);
       }
