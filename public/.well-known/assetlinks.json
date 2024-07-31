@@ -1,1 +1,8 @@
-{}
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "sh.now.myrio",
+    "sha256_cert_fingerprints": ["58:5D:17:D8:24:EB:24:80:DF:96:82:B4:B2:CB:84:71:A1:08:83:A4:B0:D6:E5:79:3C:9B:AC:15:1A:BE:77:B2"]
+  }
+}]
