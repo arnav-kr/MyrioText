@@ -29,7 +29,7 @@ if (mode == "development") {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), SWUpdate("sw.js", "dist")],
+  plugins: [tailwindcss(), SWUpdate("sw.js", "public")],
   ...serverOptions,
   // manifest: true, // uncomment for PWA support
 })

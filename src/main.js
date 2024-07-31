@@ -6,28 +6,70 @@ globalThis.Toast = Toast;
 globalThis.encodeChannels = encodeChannels;
 globalThis.parseCannels = parseChannels;
 
-// get url queries, and accordingly set, live mode, use encryption, processing mode, data uri of image
 let urlParams = new URLSearchParams(window.location.search);
 let urlData = {
+  text: urlParams.get("text"),
   image: urlParams.get("image"),
+  key: urlParams.get("key"),
+  unitSize: urlParams.get("unit_size"),
   mode: urlParams.get("mode"),
   live: urlParams.get("live"),
   encryption: urlParams.get("encryption"),
 }
 
+const encodeForm = document.getElementById("encode-form");
+const decodeForm = document.getElementById("decode-form");
+const useEncryption = document.getElementById("use-encryption");
+const imageInput = document.getElementById("image-file");
+
 // set processing mode
 if (urlData.mode !== null) {
-  openProcessingMode(urlData.mode === 0 ? "encode" : "decode");
+  if (urlData.mode === "0") openProcessingMode("encode");
+  if (urlData.mode === "1") openProcessingMode("decode");
 }
 
 // set live mode
 if (urlData.live !== null) {
-  document.getElementById("live-convert").checked = urlData.live === 1 ? true : false;
+  const live = document.getElementById("live-convert")
+  if (urlData.live === "1") live.checked = true;
+  if (urlData.live === "0") live.checked = false;
+}
+
+// set unit size
+if (urlData.unitSize !== null && Number.isInteger(parseInt(urlData.unitSize))) {
+  document.getElementById("unit-size").value = urlData.unitSize;
 }
 
 // set use encryption
 if (urlData.encryption !== null) {
-  document.getElementById("use-encryption").checked = urlData.encryption === 1 ? true : false;
+  if (urlData.encryption === "1") {
+    useEncryption.checked = true;
+    setTimeout(() => { useEncryption.dispatchEvent(new Event("change")) });
+  }
+  if (urlData.encryption === "0") {
+    useEncryption.checked = false;
+    setTimeout(() => { useEncryption.dispatchEvent(new Event("change")) });
+  }
+}
+
+// set key
+if (urlData.key !== null && urlData.key !== "" && urlData.encryption !== "0") {
+  console.log(urlData.key, urlData.text, urlData.encryption);
+  if (urlData.text !== null && urlData.text !== "") {
+    document.getElementById("key").value = urlData.key;
+    useEncryption.checked = true;
+    setTimeout(() => { useEncryption.dispatchEvent(new Event("change")) });
+  }
+  if (urlData.image !== null && urlData.image !== "invalid") {
+    document.getElementById("decryption-key").value = urlData.key;
+  }
+}
+
+// set text
+if (urlData.text !== null && urlData.text !== "") {
+  document.getElementById("text-input").value = urlData.text;
+  openProcessingMode("encode");
+  setTimeout(() => { encodeForm.dispatchEvent(new Event("input")); });
 }
 
 // load image from data uri if valid
@@ -39,11 +81,14 @@ if (urlData.image !== null && urlData.image !== "invalid") {
     try {
       let url = decodeURIComponent(urlData.image);
       let file = await fetch(url).then(response => response.blob());
-      let imageInput = document.getElementById("image-file");
       let data = new DataTransfer();
       data.items.add(new File([file], "image.png", { type: "image/png" }));
       imageInput.files = data.files;
-      imageInput.dispatchEvent(new Event("change"));
+      openProcessingMode("decode");
+      setTimeout(() => {
+        imageInput.dispatchEvent(new Event("change"));
+        decodeForm.dispatchEvent(new Event("input"));
+      });
     } catch (error) {
       new Toast({ message: "Invalid Image", type: "error" });
     }
@@ -108,11 +153,6 @@ document.getElementById("copy-text-button").addEventListener("click", async () =
   new Toast({ message: result.message, type });
 });
 
-const encodeForm = document.getElementById("encode-form");
-const decodeForm = document.getElementById("decode-form");
-const useEncryption = document.getElementById("use-encryption");
-const imageInput = document.getElementById("image-file");
-
 // handle encode submit
 encodeForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -172,6 +212,10 @@ encodeForm.addEventListener("input", async () => {
     // disable multi channel support, stick to alpha channel
     let colorChannels = [0, 0, 0, 1];
     let key = useEncryption.checked ? document.getElementById("key").value : null;
+    if (!key) {
+      document.getElementById("key").setCustomValidity("Key is required for encryption");
+      return encodeForm.reportValidity();
+    }
     // encode text
     let canvas = document.getElementById("render");
     let result = await encode({ text, canvas, unitSize, key, colorChannels });
@@ -196,7 +240,7 @@ decodeForm.addEventListener("input", () => {
 useEncryption.addEventListener("change", () => {
   let keyInput = document.getElementById("key");
   keyInput.required = useEncryption.checked;
-  encodeForm.dispatchEvent(new Event("input"));
+  setTimeout(() => { encodeForm.dispatchEvent(new Event("input")) });
 });
 
 decodeForm.addEventListener("decryption-key", (e) => {
@@ -282,7 +326,7 @@ function openProcessingMode(mode) {
   if (mode != "encode" && mode != "decode") return false;
   let radio = document.getElementById(`${mode}-checkbox`);
   radio.checked = true;
-  radio.dispatchEvent(new Event("change"));
+  setTimeout(() => { radio.dispatchEvent(new Event("change")) });
   return true;
 }
 let installButton = document.getElementById("install-button");

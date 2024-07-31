@@ -1,3 +1,4 @@
+// nonce{169ef21491} - Automatically generated [DO NOT MODIFY]
 /**
  * Template Used: https://gist.github.com/arnav-kr/0ad065605d2fe20967a6da383aef8b72
  */
@@ -41,6 +42,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+
 // Service Worker "fetch" event listener
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
@@ -54,22 +56,15 @@ self.addEventListener("fetch", (event) => {
       const formData = await event.request.formData();
       if (formData.has('image')) {
         const file = formData.get('image');
-        // use file reader api to read to data url and then pass on the data url
-        let fileReader = new FileReader();
-        fileReader.addEventListener('load',  () => {
-          let data = fileReader.result;
+        console.log(file)
+        if (file) {
+          let data = await readAsDataURL(file);
+          console.log("image url: %s", data);
           return Response.redirect(`/?image=${encodeURIComponent(data)}`, 303);
-        });
-        if(file) {
-          fileReader.readAsDataURL(file);
         }
         else {
           return Response.redirect(`/?image=invalid`, 303);
         }
-      }
-
-      else {
-        return Response.redirect(`/?image=invalid`, 303);
       }
     })());
   }
@@ -89,3 +84,16 @@ self.addEventListener("fetch", (event) => {
     );
   }
 });
+
+async function readAsDataURL(file) {
+  const reader = new FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = e => {
+      resolve(e.target.result);
+    }
+    reader.onerror = e => {
+      reject(e);
+    }
+    reader.readAsDataURL(file);
+  })
+}
