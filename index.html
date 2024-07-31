@@ -124,7 +124,7 @@ https://ogp.me/ns/website#">
 <body
   class="group/body tab-encode flex flex-col min-h-screen dark:bg-zinc-900 dark:text-zinc-50 bg-zinc-50 text-zinc-900 zinc-50">
   <header
-    class="w-full flex justify-between items-center gap-2 xs:p-4 scale-90 sm:scale-100 p-2 sm:p-8 pb-6 lg:pb-0 xxl:justify-around">
+    class="select-none w-full flex justify-between items-center gap-2 xs:p-4 scale-90 sm:scale-100 p-2 sm:p-8 pb-6 lg:pb-0 xxl:justify-around">
     <img src="favicon.svg" alt="Myrio Text Logo" title="Myrio Text" class="w-14 h-14">
     <nav
       class="relative rounded-[6px] shadow-sm dark:shadow-lg dark:bg-zinc-900 dark:text-zinc-50 text-zinc-900 ring-1 ring-zinc-200 dark:ring-zinc-700 font-semibold flex gap-3 p-1.5">
@@ -216,11 +216,11 @@ https://ogp.me/ns/website#">
       <section id="encode-section" class="hidden group-[.tab-encode]/body:block">
         <form id="encode-form">
           <!-- input text -->
-          <label for="text-input" class="label">Enter Your Text to Encode:</label>
+          <label for="text-input" class="label select-none">Enter Your Text to Encode:</label>
           <textarea id="text-input" name="text-input" class="resize input" rows="6" required></textarea>
 
           <!-- unit size -->
-          <label for="unit-size" class="label">Unit Size:</label>
+          <label for="unit-size" class="label select-none">Unit Size:</label>
           <input type="number" id="unit-size" name="unit-size" class="input" value="10" min="1" max="255" step="1"
             spellcheck="false" autocomplete="off" required>
 
@@ -287,7 +287,7 @@ https://ogp.me/ns/website#">
 
           <!-- encryption key input -->
           <div class="hidden peer-checked:block mt-2 peer-has-[.use-encryption-checkbox:checked]:block">
-            <label for="key" class="label">Encryption Key:</label>
+            <label for="key" class="label select-none">Encryption Key:</label>
             <input type="text" id="key" name="key" class="input" spellcheck="false" autocomplete="off" />
           </div>
 
@@ -360,7 +360,7 @@ https://ogp.me/ns/website#">
           </label>
           <!-- decryption key -->
           <div class="hidden mt-2">
-            <label for="decryption-key" class="label">Decryption Key:</label>
+            <label for="decryption-key" class="label select-none">Decryption Key:</label>
             <input type="text" id="decryption-key" name="decryption-key" class="input" spellcheck="false"
               autocomplete="off" />
           </div>
