@@ -1,5 +1,5 @@
-// nonce{169ef21491} - Automatically generated [DO NOT MODIFY]
-/**
+// nonce{7e6ddb8b9e} - Automatically generated [DO NOT MODIFY]
+/*
  * Template Used: https://gist.github.com/arnav-kr/0ad065605d2fe20967a6da383aef8b72
  */
 // SkipWaiting on message from the webpage

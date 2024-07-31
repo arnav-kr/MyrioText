@@ -105,7 +105,7 @@ export function uniqueID() {
 
 export async function getFile(canvas) {
   let result = await fetch(canvas.toDataURL("image/png")).then(r => r.blob());
-  return new File([result], `${uniqueID()}_myrio.txt.png`, { type: "image/png" });
+  return new File([result], `${uniqueID()}.myrio.txt.png`, { type: "image/png" });
 }
 
 export function encodeChannels(channels) {

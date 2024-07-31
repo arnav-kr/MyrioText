@@ -3,8 +3,6 @@ import { getFile, copy, download, share, Toast, parseChannels, encodeChannels } 
 import { encode, decode } from "./js/myrio";
 import { PWAManager } from './js/PWAManager';
 globalThis.Toast = Toast;
-globalThis.encodeChannels = encodeChannels;
-globalThis.parseCannels = parseChannels;
 
 let urlParams = new URLSearchParams(window.location.search);
 let urlData = {
@@ -98,15 +96,20 @@ if (urlData.image !== null && urlData.image !== "invalid") {
 // file_handle
 if ('launchQueue' in window) {
   launchQueue.setConsumer(async launchParams => {
-    if (!launchParams.files.length) { return; }
-
-    const fileHandle = launchParams.files[0];
-    if (fileHandle.kind == "file" || fileHandle.endsWith(".png")) {
-      let file = await fileHandle.getFile();
-      let dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file);
-      let imageInput = document.getElementById("image-file");
-      imageInput.files = dataTransfer.files;
+    if (launchParams.files && launchParams.files.length) {
+      const fileHandle = launchParams.files[0];
+      console.log(fileHandle);
+      if (fileHandle.kind == "file" && fileHandle.name.endsWith(".png")) {
+        let file = await fileHandle.getFile();
+        let dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        imageInput.files = dataTransfer.files;
+        openProcessingMode("decode");
+        setTimeout(() => {
+          imageInput.dispatchEvent(new Event("change"));
+          decodeForm.dispatchEvent(new Event("input"));
+        });
+      }
     }
   });
 }

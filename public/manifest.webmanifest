@@ -34,18 +34,6 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "/assets/logo_maskable.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/assets/logo_maskable.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
     }
   ],
   "screenshots": [
@@ -145,28 +133,35 @@
       "description": "Encode your text",
       "icons": [
         {
-          "src": "/assets/logo.png",
-          "sizes": "1024x1024",
+          "src": "/assets/encode.png",
+          "sizes": "512x512",
           "type": "image/png",
           "purpose": "any"
         },
         {
-          "src": "/assets/logo.svg",
+          "src": "/assets/encode.svg",
           "sizes": "512x512",
           "type": "image/svg+xml",
           "purpose": "any"
-        },
+        }
+      ]
+    },
+    {
+      "name": "Encrypt Text",
+      "url": "/?encryption=1",
+      "description": "Encrypt your text",
+      "icons": [
         {
-          "src": "/assets/logo_maskable.png",
-          "sizes": "1024x1024",
+          "src": "/assets/encrypt.png",
+          "sizes": "512x512",
           "type": "image/png",
-          "purpose": "maskable"
+          "purpose": "any"
         },
         {
-          "src": "/assets/logo_maskable.svg",
+          "src": "/assets/encrypt.svg",
           "sizes": "512x512",
           "type": "image/svg+xml",
-          "purpose": "maskable"
+          "purpose": "any"
         }
       ]
     }
@@ -190,10 +185,10 @@
   "file_handlers": [
     {
       "action": "/",
-      "name": "Myrio Text Decode",
+      "name": "Myrio Text",
       "accept": {
         "image/png": [
-          ".txt.png"
+          ".png"
         ]
       },
       "icons": [
@@ -208,18 +203,6 @@
           "sizes": "512x512",
           "type": "image/svg+xml",
           "purpose": "any"
-        },
-        {
-          "src": "/assets/logo_maskable.png",
-          "sizes": "1024x1024",
-          "type": "image/png",
-          "purpose": "maskable"
-        },
-        {
-          "src": "/assets/logo_maskable.svg",
-          "sizes": "512x512",
-          "type": "image/svg+xml",
-          "purpose": "maskable"
         }
       ]
     }
