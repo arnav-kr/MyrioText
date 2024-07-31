@@ -1,0 +1,4 @@
+Contact: myrio@googlegroups.com
+Expires: 2026-01-01T00:00:00.000Z
+Preferred-Languages: en, hi
+Canonical: https://myrio.now.sh/.well-known/security.txt
