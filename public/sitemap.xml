@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://myrio.now.sh</loc>
+  </url>
+  <url>
+    <loc>https://myrio.now.sh/assets/logo.png</loc>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/logo.png</image:loc>
+      <image:title>Myrio Text</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://myrio.now.sh/assets/og_banner.png</loc>
+    <image:image>
+      <image:loc>https://myrio.now.sh/og_banner.png</image:loc>
+      <image:title>Myrio Text Banner</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://myrio.now.sh/</loc>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-wide-1.png</image:loc>
+      <image:title>Desktop Encrypting Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-wide-2.png</image:loc>
+      <image:title>Desktop Decrypting Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-light-wide-1.png</image:loc>
+      <image:title>Desktop Encrypting Data - Light Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-light-wide-2.png</image:loc>
+      <image:title>Desktop Decrypting Data - Light Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-wide-3.png</image:loc>
+      <image:title>Desktop Encoding Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-wide-4.png</image:loc>
+      <image:title>Desktop Decoding Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-narrow-1.png</image:loc>
+      <image:title>Mobile Encrypting Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-narrow-2.png</image:loc>
+      <image:title>Mobile Decrypting Data - Dark Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-light-narrow-1.png</image:loc>
+      <image:title>Mobile Encrypting Data - Light Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-light-narrow-2.png</image:loc>
+      <image:title>Mobile Decrypting Data - Light Theme</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://myrio.now.sh/assets/screenshots/screenshot-dark-narrow-4.png</image:loc>
+      <image:title>Mobile Decoding Data - Dark Theme</image:title>
+    </image:image>
+  </url>
+</urlset>
