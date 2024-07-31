@@ -105,14 +105,16 @@ menu.\
 ## Advanced Usage
 Myrio Text supports passing parameters in the URL to control the encoding and decoding process. All the process that can
 be done in UI can directly be done using the URL parameters. The parameters are:
-- `mode: 0|1` - The mode of operation. `0` for `encode`, `1` for `decode`.
-- `live: 0|1` - The live generation of the encoded image as you type..
-- `encrypted: 0|1` - The encryption of the encoded text.
-- `text: string` - The text to be encoded.
-- `image: string` - The image to be decoded.
-- `key: string` - The key for encryption/decryption. either `text` or `image` paramaters should be present for it to
-work.
-- `unit_size: number` - The size of the unit in pixels. Default is `10`.
+
+| paramater | value | description |
+| --- | --- | --- |
+| `mode` | `0\|1` | The mode of operation. `0` for `encode`, `1` for `decode`. |
+| `live` | `0\|1` | The live generation of the encoded image as you type. |
+| `encrypted` | `0\|1` | The encryption of the encoded text. |
+| `text` | `string` | The text to be encoded. |
+| `image` | `string` | The image to be decoded. |
+| `key` | `string` | The key for encryption/decryption. either `text` or `image` paramaters should be present for it to work. |
+| `unit_size` | `number` | The size of the unit in pixels. Default is `10`. |
 
 An example URL would be:
 ```
