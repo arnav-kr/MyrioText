@@ -1,6 +1,6 @@
 Myrio Text
 ===
-![Myrio Text Logo](./assets/Banner.svg)
+![Myrio Text Logo](https://github.com/arnav-kr/MyrioText/raw/main/assets/Banner.svg)
 
 Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret
 messages with your friends.
@@ -20,27 +20,27 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
       </summary>
       <div>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-wide-1.png" alt="Encrypting Data - Dark Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-1.png" alt="Encrypting Data - Dark Theme"
             width="100%">
           <figcaption>Encrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-wide-2.png" alt="Decrypting Data - Dark Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-2.png" alt="Decrypting Data - Dark Theme"
             width="100%">
           <figcaption>Decrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-light-wide-1.png" alt="Encrypting Data - Light Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-wide-1.png" alt="Encrypting Data - Light Theme"
             width="100%">
           <figcaption>Encrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-light-wide-2.png" alt="Decrypting Data - Light Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-wide-2.png" alt="Decrypting Data - Light Theme"
             width="100%">
           <figcaption>Decrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-wide-4.png" alt="Decoding Data - Dark Theme" width="100%">
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-4.png" alt="Decoding Data - Dark Theme" width="100%">
           <figcaption>Decoding Data - Dark Theme</figcaption>
         </figure>
       </div>
@@ -51,27 +51,27 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
       </summary>
       <div>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-narrow-1.png" alt="Encrypting Data - Dark Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-1.png" alt="Encrypting Data - Dark Theme"
             width="100%">
           <figcaption>Encrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-narrow-2.png" alt="Decrypting Data - Dark Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-2.png" alt="Decrypting Data - Dark Theme"
             width="100%">
           <figcaption>Decrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-light-narrow-1.png" alt="Encrypting Data - Light Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-narrow-1.png" alt="Encrypting Data - Light Theme"
             width="100%">
           <figcaption>Encrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-light-narrow-2.png" alt="Decrypting Data - Light Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-narrow-2.png" alt="Decrypting Data - Light Theme"
             width="100%">
           <figcaption>Decrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="public/assets/screenshots/screenshot-dark-narrow-4.png" alt="Decoding Data - Dark Theme"
+          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-4.png" alt="Decoding Data - Dark Theme"
             width="100%">
           <figcaption>Decoding Data - Dark Theme</figcaption>
         </figure>
@@ -126,4 +126,4 @@ this would encode the text `Hello World` with encryption using the key `top_secr
 - Arnav Kumar ([@arnav-kr](https://github.com/arnav-kr))
 
 ## License
-This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the AGPL-3.0 License - see the [LICENSE](https://github.com/arnav-kr/MyrioText/blob/main/LICENSE) file for details.
