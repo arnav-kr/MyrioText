@@ -117,7 +117,7 @@ be done in UI can directly be done using the URL parameters. The parameters are:
 | `unit_size` | `number` | The size of the unit in pixels. Default is `10`. |
 
 An example URL would be:
-```
+```txt
 https://myrio.now.sh/?text=Hello%20World&encrypted=1&key=top_secret
 ```
 this would encode the text `Hello World` with encryption using the key `top_secret`
