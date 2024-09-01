@@ -80,6 +80,10 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
   </div>
 </details>
 
+## Some cool stats about Myrio Text
++ Whole [Flaming Chickens](https://biggest.fandom.com/wiki/Biggest_Wiki%E2%80%99s_Longest_Text_Ever_by_Misc544#Longest_Text_Ever)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/flamingchickens.txt)</sup> (`200KB`) can be encoded in a single [image](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/flamingchickens.png) of size `154KB`.
++ Repeating `"Never Gonna Give You Up!"` spanning over 10 Million characters (`10MB`)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/nggyu.txt)</sup> can be encoded in a single [image](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/nggyu.png) of of size `3.65KB`
++ Cool Things that you find
 
 ## Features
 - Encode text to an image
