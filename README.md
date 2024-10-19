@@ -1,6 +1,6 @@
 Myrio Text
 ===
-![Myrio Text Logo](https://github.com/arnav-kr/MyrioText/raw/main/assets/Banner.svg)
+![Myrio Text Logo](assets/Banner.svg)
 
 Myrio Text lets you encode your text in the form of an image, and decode it back to text. It's a fun way to share secret
 messages with your friends.
@@ -20,27 +20,27 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
       </summary>
       <div>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-1.png" alt="Encrypting Data - Dark Theme"
+          <img src="public/assets/screenshots/screenshot-dark-wide-1.png" alt="Encrypting Data - Dark Theme"
             width="100%">
           <figcaption>Encrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-2.png" alt="Decrypting Data - Dark Theme"
+          <img src="public/assets/screenshots/screenshot-dark-wide-2.png" alt="Decrypting Data - Dark Theme"
             width="100%">
           <figcaption>Decrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-wide-1.png" alt="Encrypting Data - Light Theme"
+          <img src="public/assets/screenshots/screenshot-light-wide-1.png" alt="Encrypting Data - Light Theme"
             width="100%">
           <figcaption>Encrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-wide-2.png" alt="Decrypting Data - Light Theme"
+          <img src="public/assets/screenshots/screenshot-light-wide-2.png" alt="Decrypting Data - Light Theme"
             width="100%">
           <figcaption>Decrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-wide-4.png" alt="Decoding Data - Dark Theme" width="100%">
+          <img src="public/assets/screenshots/screenshot-dark-wide-4.png" alt="Decoding Data - Dark Theme" width="100%">
           <figcaption>Decoding Data - Dark Theme</figcaption>
         </figure>
       </div>
@@ -51,27 +51,27 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
       </summary>
       <div>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-1.png" alt="Encrypting Data - Dark Theme"
+          <img src="public/assets/screenshots/screenshot-dark-narrow-1.png" alt="Encrypting Data - Dark Theme"
             width="100%">
           <figcaption>Encrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-2.png" alt="Decrypting Data - Dark Theme"
+          <img src="public/assets/screenshots/screenshot-dark-narrow-2.png" alt="Decrypting Data - Dark Theme"
             width="100%">
           <figcaption>Decrypting Data - Dark Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-narrow-1.png" alt="Encrypting Data - Light Theme"
+          <img src="public/assets/screenshots/screenshot-light-narrow-1.png" alt="Encrypting Data - Light Theme"
             width="100%">
           <figcaption>Encrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-light-narrow-2.png" alt="Decrypting Data - Light Theme"
+          <img src="public/assets/screenshots/screenshot-light-narrow-2.png" alt="Decrypting Data - Light Theme"
             width="100%">
           <figcaption>Decrypting Data - Light Theme</figcaption>
         </figure>
         <figure>
-          <img src="https://github.com/arnav-kr/MyrioText/raw/main/public/assets/screenshots/screenshot-dark-narrow-4.png" alt="Decoding Data - Dark Theme"
+          <img src="public/assets/screenshots/screenshot-dark-narrow-4.png" alt="Decoding Data - Dark Theme"
             width="100%">
           <figcaption>Decoding Data - Dark Theme</figcaption>
         </figure>
@@ -81,8 +81,8 @@ Try it out at [myrio.now.sh](https://myrio.now.sh/)
 </details>
 
 ## Some cool stats about Myrio Text
-+ Whole [Flaming Chickens](https://biggest.fandom.com/wiki/Biggest_Wiki%E2%80%99s_Longest_Text_Ever_by_Misc544#Longest_Text_Ever)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/flamingchickens.txt)</sup> (`200KB`) can be encoded in a single [image](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/flamingchickens.png) of size `154KB`.
-+ Repeating `"Never Gonna Give You Up!"` spanning over 10 Million characters (`10MB`)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/nggyu.txt)</sup> can be encoded in a single [image](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/nggyu.png) of of size `3.65KB`
++ Whole [Flaming Chickens](https://biggest.fandom.com/wiki/Biggest_Wiki%E2%80%99s_Longest_Text_Ever_by_Misc544#Longest_Text_Ever)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/flamingchickens.txt)</sup> (`200KB`) can be encoded in a single [image](/assets/stats/flamingchickens.png) of size `154KB`.
++ Repeating `"Never Gonna Give You Up!"` spanning over 10 Million characters (`10MB`)<sup>[[file]](https://github.com/arnav-kr/MyrioText/blob/main/assets/stats/nggyu.txt)</sup> can be encoded in a single [image](assets/stats/nggyu.png) of of size `3.65KB`
 + Cool Things that you find
 
 ## Features
@@ -130,4 +130,4 @@ this would encode the text `Hello World` with encryption using the key `top_secr
 - Arnav Kumar ([@arnav-kr](https://github.com/arnav-kr))
 
 ## License
-This project is licensed under the AGPL-3.0 License - see the [LICENSE](https://github.com/arnav-kr/MyrioText/blob/main/LICENSE) file for details.
+This project is licensed under the AGPL-3.0 License - see the [LICENSE](LICENSE) file for details.
